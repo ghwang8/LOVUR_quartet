@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'theseasons-reg';
+  src: url('/fonts/theseasons-reg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'theseasons-it';
+  src: url('/fonts/theseasons-it.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-montserrat {
+  font-family: var(--font-montserrat);
+}
+
+.font-theseasons {
+  font-family: var(--font-primary);
+}
+
+.font-theseasons-it {
+  font-family: var(--font-theseasons-it);
+}
+
+:root {
+  --font-theseasons-it: 'theseasons-it', serif;
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-primary: 'theseasons-reg', serif;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-montserrat: var(--font-montserrat);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-primary);
+}
