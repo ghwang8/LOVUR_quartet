@@ -30,8 +30,8 @@ export default async function HomePage() {
         />
         <div className="absolute bottom-0 w-full bg-white bg-opacity-80 p-6 text-center flex flex-col items-center">
           <div className='flex items-end mb-3'>
-            <h2 className="text-xl font-semibold mr-2">LOVUR:</h2>
-            <p className="text-xl mt-3">
+            <h2 className="text-lg md:text-xl font-semibold mr-2">LOVUR:</h2>
+            <p className="text-lg md:text-xl mt-3">
               pronounced <code>/ˈlʌvɚ/</code> <span className="italic">(LUV-er)</span>
             </p>
           </div>
@@ -44,7 +44,7 @@ export default async function HomePage() {
         </div>
       </section>
       <div className="flex w-full justify-center space-y-16 p-8">
-        <div className='w-4/5 border-t border-gray-300 mb-6'>
+        <div className='w-full md:w-4/5 border-t border-gray-300 mb-6'>
           {song && <FeatureSongComponent song={song} />}
         </div>
       

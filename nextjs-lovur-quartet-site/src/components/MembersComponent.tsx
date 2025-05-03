@@ -5,43 +5,46 @@ import { urlFor } from '@/sanity/client';
 
 interface Props {
   member: Member;
-  index: number; 
+  index: number;
+  total: number; 
 }
 
-const MembersComponent = ({ member, index }: Props) => {
-  const isEven = index % 2 === 1;
 
+const MembersComponent = ({ member, index, total }: Props) => {
+  const isEven = index % 2 === 1;
+  const isLast = index === total - 1;
   return (
     <div
-      className={`flex items-center border-b border-gray-300 pb-6 ${
-        isEven ? 'flex-row-reverse text-right' : ''
-      }`}
+      className={`flex flex-col md:flex-row items-center ${
+        isLast ? '' : 'border-b border-gray-300 pb-6'
+      } ${isEven ? 'flex-col md:flex-row-reverse text-right' : ''}`}
     >
+
       {/* Member Image */}
-      <div className="flex-shrink-0 w-48 h-auto">
+      <div className="flex-shrink-0 w-[230px] h-auto mb-5 md:mb-0">
         <Image
           src={urlFor(member.photo).url()}
           alt={member.name}
-          width={190}
-          height={285}
+          width={230}
+          height={305}
           className="h-auto object-cover"
         />
       </div>
 
       {/* Member Details */}
       <div
-        className={`font-montserrat space-y-4 flex-grow ${
-          isEven ? 'mr-6' : 'ml-6'
+        className={`flex flex-col items-center font-montserrat space-y-4 flex-grow ${
+          isEven ? 'md:items-end md:mr-6' : 'md:items-start md:ml-6'
         }`}
       >
-        <h2 className="font-theseasons text-2xl font-semibold">{member.name}</h2>
-        <p className="italic text-lg text-gray-700">{member.position}</p>
-        <p className="text-gray-600">{member.description}</p>
+        <h2 className="font-theseasons text-3xl mb-0">{member.name}</h2>
+        <p className="italic text-lg text-gray-700 mb-6">{member.position}</p>
+        <p className="text-gray-600 mb-7 text-center md:text-justify font-normal">{member.description}</p>
 
         {/* Button to Full Bio */}
         <Link href={`/members/${member.slug.current}`}>
-          <p className="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-            View Full Bio
+          <p className="inline-block font-semibold uppercase mt-4 px-6 py-2 bg-gray-900 text-white hover:bg-gray-500">
+            Full Bio
           </p>
         </Link>
       </div>

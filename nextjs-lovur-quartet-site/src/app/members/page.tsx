@@ -21,11 +21,10 @@ export default async function MembersPage() {
   return (
     <>
     <Navbar />
-    <div className="container mx-auto p-8 space-y-8">
-      <h1 className="text-4xl font-bold text-center">Meet the Quartet</h1>
+    <div className="container max-w-5xl mx-auto my-7 p-8 space-y-8">
       <div className="space-y-8">
         {members.map((member, index) => (
-          <MembersComponent key={member._id} member={member} index={index} />
+          <MembersComponent key={member._id} member={member} index={index} total={members.length} />
         ))}
       </div>
     </div>

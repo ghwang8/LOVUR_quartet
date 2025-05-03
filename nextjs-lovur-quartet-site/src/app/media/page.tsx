@@ -12,19 +12,24 @@ function urlFor(source: any) {
 }
 
 const MEDIA_QUERY = groq`{
-    "pressKit": *[_type == "pressKit"][0]{
-      downloadLink,
-      buttonText,
-      year
-    },
-    "videos": *[_type == "socialVideo"]{
-      videoUrl,
-      thumbnail
-    },
-    "gallery": *[_type == "galleryImage"]{
+  "pressKit": *[_type == "pressKit"][0]{
+    downloadLink,
+    buttonText,
+    year
+  },
+  "videos": *[_type == "socialVideo"]{
+    videoUrl,
+    thumbnail
+  },
+  "gallery": *[_type == "gallery"][0]{
+    title,
+    images[]->{
+      _id,
       image,
-      altText
+      altText,
+      size
     }
+  }
 }`
 
 export default async function MediaPage() {
@@ -33,17 +38,17 @@ export default async function MediaPage() {
   return (
     <>
       <Navbar />
-      <main className="container mx-auto px-4 py-12">
-          {/* Press Kit Section */}
-          <section className="mb-16 text-center">
+      <main className="container flex flex-col w-full justify-center items-center mx-auto px-4 py-12">
+        {/* Press Kit Section */}
+        <section className="flex flex-col w-full max-w-6xl items-start mb-16 text-left">
           {pressKit && (
             <div className="space-y-4">
-              <h2 className="text-3xl font-bold mb-4">
+              <h2 className="text-4xl mb-4">
                 Press Kit {pressKit.year}
               </h2>
               <a
                 href={pressKit.downloadLink}
-                className="font-montserrat inline-block font-bold py-3 px-6 rounded-lg text-lg transition-colors"
+                className="font-montserrat inline-block py-3 rounded-lg text-lg transition-colors hover:text-blue-400"
                 download
               >
                 {pressKit.buttonText}
@@ -54,18 +59,18 @@ export default async function MediaPage() {
 
         {/* Videos Section */}
         {videos?.length > 0 && (
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-center">Videos</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <section className="mb-16 w-full max-w-6xl">
+            <h2 className="text-4xl mb-8 text-left">Videos</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {videos.map((video: any) => (
-                <div key={video.videoUrl} className="rounded-lg overflow-hidden shadow-lg">
+                <div key={video.videoUrl} className="overflow-hidden shadow-lg">
                   <a href={video.videoUrl} target="_blank" rel="noopener noreferrer">
                     <Image
                       src={urlFor(video.thumbnail).url()}
                       alt={video.title || 'Social media video'}
                       width={600}
-                      height={400}
-                      className="w-full h-48 object-cover"
+                      height={500}
+                      className="w-full h-80 object-cover"
                     />
                   </a>
                 </div>
@@ -75,21 +80,29 @@ export default async function MediaPage() {
         )}
 
         {/* Gallery Section */}
-        {gallery?.length > 0 && (
-          <section>
-            <h2 className="text-3xl font-bold mb-8 text-center">Gallery</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {gallery.map((image: any) => (
-                <div key={image._id} className="group relative rounded-lg overflow-hidden">
+        {gallery && gallery.images.length > 0 && (
+          <section className='w-full max-w-6xl'>
+            <h2 className="text-4xl mb-8 text-left">Gallery</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {gallery.images.map((image: any) => {
+                const isLarge = image.size === 'large'
+                return (
+                  <div
+                    key={image._id}
+                    className={`group relative overflow-hidden ${
+                      isLarge ? 'col-span-2' : 'col-span-1'
+                    }`}
+                  >
                     <Image
-                    src={urlFor(image.image).url()}
-                    alt={image.altText}
-                    width={400}
-                    height={400}
-                    className="w-full h-64 object-cover transition-transform group-hover:scale-105"
+                      src={urlFor(image.image).url()}
+                      alt={image.altText}
+                      width={isLarge ? 500 : 250}
+                      height={400}
+                      className="w-full h-[400px] object-cover transition-transform group-hover:scale-105"
                     />
-                </div>
-            ))}
+                  </div>
+                )
+              })}
             </div>
           </section>
         )}

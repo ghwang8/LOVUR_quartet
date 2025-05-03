@@ -54,8 +54,8 @@ export default async function ConcertsPage() {
             className="absolute inset-0 w-full h-full object-cover"
           />
         )}
-        <div className="absolute bottom-[45px] left-[100px] p-6 text-left bg-gradient-to-t from-black/70 to-transparent">
-          <h1 className="text-4xl md:text-6xl lg:text-6xl text-white font-bold mb-2">
+        <div className="absolute bottom-[45px] left-[170px] p-6 text-left bg-gradient-to-t from-black/70 to-transparent">
+          <h1 className="text-4xl md:text-6xl lg:text-6xl text-white font-normal mb-2">
             {concertPage?.heroTitle || 'Upcoming Concerts 2024/2025'}
           </h1>
           {concertPage?.heroSubtitle && (
@@ -69,8 +69,12 @@ export default async function ConcertsPage() {
         {concerts.length === 0 ? (
           <p className="text-center text-gray-500">No concerts currently scheduled.</p>
         ) : (
-          concerts.map((concert) => (
-            <ConcertCard key={concert._id} concert={concert} />
+          concerts.map((concert, index ) => (
+            <ConcertCard 
+              key={concert._id} 
+              concert={concert}
+              isLast={index === concerts.length-1}
+            />
           ))
         )}
       </main>

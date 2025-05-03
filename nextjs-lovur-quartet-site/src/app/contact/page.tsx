@@ -14,7 +14,8 @@ export default function ContactPage() {
 
     const formData = new FormData(e.currentTarget as HTMLFormElement)
     const data = {
-      name: formData.get('name'),
+      firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
       email: formData.get('email'),
       message: formData.get('message'),
     }
@@ -37,28 +38,46 @@ export default function ContactPage() {
     <>
       <Navbar />
       <div className="max-w-6xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center h-[650px]">
           {/* Contact Form */}
-          <div>
-            <h1 className="text-4xl font-bold mb-2">Hello!</h1>
-            <p className="text-lg text-gray-600 mb-8">We would love to hear from you.</p>
-            <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-lg shadow-md">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  required
-                  placeholder="Your full name"
-                  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+          <div className='flex flex-col h-[100%]'>
+            <div className='mb-8'>
+              <h1 className="text-4xl font-bold mb-2">Hello!</h1>
+              <p className="font-montserrat text-lg text-gray-600 mb-8">We would love to hear from you.</p>
+            </div>
+            <form onSubmit={handleSubmit} className="font-montserrat space-y-6 bg-white">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="firstName" className="block text-m text-gray-700 mb-1">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    required
+                    placeholder=""
+                    className="w-full bg-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="lastName" className="block text-m text-gray-700 mb-1">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    required
+                    placeholder=""
+                    className="w-full bg-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-m text-gray-700 mb-1">
                   Email
                 </label>
                 <input
@@ -66,32 +85,34 @@ export default function ContactPage() {
                   name="email"
                   id="email"
                   required
-                  placeholder="you@example.com"
-                  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder=""
+                  className="w-full bg-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="message" className="block text-m text-gray-700 mb-1">
                   Message
                 </label>
                 <textarea
                   name="message"
                   id="message"
                   required
-                  rows={5}
-                  placeholder="Type your message here..."
-                  className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  rows={7}
+                  placeholder=""
+                  className="w-full bg-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
-              <button
-                type="submit"
-                disabled={status === 'sending'}
-                className="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-700 transition"
-              >
-                {status === 'sending' ? 'Sending...' : 'Send Message'}
-              </button>
+              <div className='flex w-full justify-center'>
+                <button
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className="w-[40%] bg-gray-900 text-white font-montserrat font-medium py-3 px-4 hover:bg-gray-500 uppercase transition cursor-pointer"
+                >
+                  {status === 'sending' ? 'Sending...' : 'Send Message'}
+                </button>
+              </div>
 
               {status === 'success' && (
                 <p className="text-green-600 text-sm mt-2">Message sent successfully!</p>
@@ -116,10 +137,10 @@ export default function ContactPage() {
         </div>
 
         {/* General Management Section */}
-        <div className="mt-16 text-center">
+        <div className="font-montserrat mt-16 text-center">
           <p className="text-lg text-gray-700">General Management</p>
 
-          <div className="w-[120px] h-[120px] mx-auto my-4">
+          <div className="w-[120px] h-[120px] mx-auto mb-4">
             <Image
               src="/media/arietta-logo-black.svg"
               alt="Arietta Entertainment logo"
@@ -129,7 +150,7 @@ export default function ContactPage() {
             />
           </div>
 
-          <h3 className="text-xl font-bold mb-2">Arietta Entertainment</h3>
+          <h3 className="text-lg font-bold mb-2">Arietta Entertainment</h3>
           <ul className="space-y-1 text-gray-700">
             <li>Phone: 778 887 2018</li>
             <li>Email: arietta.entertainment@gmail.com</li>

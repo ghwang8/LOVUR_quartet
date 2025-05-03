@@ -85,6 +85,37 @@ export const galleryImage = defineType({
       type: 'string',
       description: 'Important for accessibility',
       validation: Rule => Rule.required()
+    }),
+    defineField({
+      name: 'size',
+      title: 'Size',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Large (Landscape)', value: 'large' },
+          { title: 'Small (Portrait)', value: 'small' }
+        ],
+        layout: 'radio' 
+      },
+      validation: Rule => Rule.required()
     })
   ]
+})
+
+//Gallery Schema
+export const gallery = defineType({
+  name: 'gallery',
+  title: 'Gallery',
+  type: 'document',
+  fields: [
+    defineField({
+      name: 'images',
+      title: 'Images',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'galleryImage' }] }],
+      options: {
+        sortable: true, 
+      }
+    }),
+  ],
 })

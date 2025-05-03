@@ -1,5 +1,5 @@
 import { client } from '@/sanity/client';
-import { groq } from 'next-sanity'
+import { groq } from 'next-sanity';
 import imageUrlBuilder from '@sanity/image-url';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -16,9 +16,9 @@ function urlFor(source: any) {
 // Custom PortableText components for styling
 const portableTextComponents: PortableTextComponents = {
   block: {
-    normal: ({ children }) => <p className="mb-4">{children}</p>, 
+    normal: ({ children }) => <p className="mb-4">{children}</p>,
   },
-}
+};
 
 interface Member {
   name: string;
@@ -56,50 +56,55 @@ export default async function MemberPage({ params }: { params: { slug: string } 
     notFound();
   }
 
+  const paragraphBlocks = member.fullBio?.filter(
+    (block: any) => block._type === 'block'
+  ) || [];
+  
+  const firstTwoParagraphs = paragraphBlocks.slice(0, 2);
+  const remainingParagraphs = paragraphBlocks.slice(2);
+  
+
   return (
     <>
       <Navbar />
-      <div className="font-montserrat container mx-auto px-4 py-10">
-        <h1 className="font-theseasons text-4xl font-bold text-center mb-4">{member.name}</h1>
-        <h2 className="italic text-xl text-center text-gray-600 mb-8">{member.position}</h2>
-        
-        {member.bioPhoto ? (
-          <div className="flex justify-center mb-8">
-            <Image
-              src={urlFor(member.bioPhoto).url()}
-              alt={member.name}
-              width={400}
-              height={400}
-              className="rounded shadow-lg object-cover"
-            />
-          </div>
-        ) : member.photo ? (
-          <div className="flex justify-center mb-8">
-            <Image
-              src={urlFor(member.photo).url()}
-              alt={member.name}
-              width={400}
-              height={400}
-              className="rounded shadow-lg object-cover"
-            />
-          </div>
-        ) : null}
-        
-        <div className="max-w-3xl mx-auto">
-          {member.fullBio ? (
-            <div className="prose">
-              <PortableText 
-                value={member.fullBio} 
-                components={portableTextComponents} 
-              />
+      <div className="flex flex-col items-center container mx-auto px-4 py-10 font-montserrat">
+         {/* Two-column layout: text + image */}
+        <div className="flex flex-col h-[600px] max-w-6xl md:flex-row md:gap-8">
+          <div className='md:w-[55%] h-[600px] flex flex-col justify-between'>
+            {/* Heading */} 
+            <div className="mb-14">
+              <h1 className="font-theseasons text-4xl font-normal mb-2">{member.name}</h1>
+              <h2 className="italic text-lg text-gray-600">{member.position}</h2>
             </div>
-          ) : (
-            <p className="text-lg leading-relaxed text-center">{member.description}</p>
-          )}
+            {/* Text block */}
+            <div className="space-y-4">
+              {firstTwoParagraphs && (
+                <PortableText value={firstTwoParagraphs} components={portableTextComponents} />
+              )}
+            </div>
+          </div>
+          
+
+          {/* Image block */}
+          <div className="md:w-[45%] h-[560px] flex justify-center mb-8 mt-6 md:mt-0">
+            <Image
+              src={urlFor(member.bioPhoto || member.photo).url()}
+              alt={member.name}
+              width={430}
+              height={400}
+              className="shadow-lg object-cover object-top translate-y-4"
+            />
+          </div>
         </div>
+
+        {/* Remaining full bio paragraphs */}
+        {remainingParagraphs?.length > 0 && (
+          <div className="max-w-6xl mx-auto prose">
+            <PortableText value={remainingParagraphs} components={portableTextComponents} />
+          </div>
+        )}
       </div>
       <Footer />
     </>
-    
   );
 }

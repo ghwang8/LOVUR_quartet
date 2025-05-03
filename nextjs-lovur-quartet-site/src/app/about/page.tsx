@@ -9,12 +9,13 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 py-8">
         {/* Header Image */}
         <div className="w-full flex justify-center mb-8">
-            <div className="w-[1000px] h-[600px] relative overflow-hidden shadow-md">
+            <div className="w-full h-[auto] md:w-[1000px] md:h-[600px] relative overflow-hidden shadow-md">
             <Image
                 src="/media/about_group_photo.jpg" 
                 alt="About LOVUR Quartet"
-                fill
-                className="object-cover"
+                width={1000}
+                height={600}
+                className="w-full h-auto object-cover"
             />
             </div>
         </div>
@@ -39,7 +40,7 @@ export default function AboutPage() {
             </ul>
 
             {/* Subheading + More Paragraphs */}
-            <h2 className="font-theseasons text-4xl mt-8 leading-[145%]">As a group, LOVUR has amassed a significant digital presence, with over 43,000 followers across social media platforms and more than 10 million views on their performance videos.</h2>
+            <h2 className="font-theseasons text-2xl md:text-4xl mt-8 leading-[145%]">As a group, LOVUR has amassed a significant digital presence, with over 43,000 followers across social media platforms and more than 10 million views on their performance videos.</h2>
 
             <p>Their innovative arrangements and stylistic versatility - from timeless classical works to fresh pop covers - have resonated with a global audience.
             </p>
