@@ -9,7 +9,6 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['cdn.sanity.io'], // Add Sanity's CDN to the list of allowed domains
   },
-  // Any other config options you need
 };
 
 export default nextConfig;
