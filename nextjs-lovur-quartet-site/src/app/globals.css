@@ -29,22 +29,29 @@
 :root {
   --font-theseasons-it: 'theseasons-it', serif;
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #ffffff;
   --font-primary: 'theseasons-reg', serif;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-montserrat: var(--font-montserrat);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  font-family: var(--font-primary);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-primary);
+/* Fix for Safari mobile tap issues */
+.safari-tap-fix {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+.safari-tap-fix:active {
+  -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+}
+
+/* Prevent layout shift during transition */
+nav {
+  contain: layout paint;
+  transform: translateZ(0);
 }

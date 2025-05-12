@@ -15,7 +15,7 @@ export type FeatureSong = {
 export default function FeatureSong({ song }: { song: FeatureSong }) {
   
   return (
-    <div className="flex flex-col md:flex-row bg-white md:p-6 rounded-xl w-full md:max-w-5xl mx-auto justify-center items-center text-center">
+    <div className="flex flex-col lg:flex-row bg-white md:p-6 rounded-xl w-full md:max-w-5xl mx-auto justify-center items-center text-center">
       <div className="flex justify-center items-center w-100 h-100">
         {song.coverImage && (
           <Image
@@ -27,8 +27,8 @@ export default function FeatureSong({ song }: { song: FeatureSong }) {
           />
         )}
       </div>
-      <div className="flex flex-col md:h-[350px] items-center md:items-start md:justify-between">
-        <div className="flex flex-col items-center md:items-start">
+      <div className="flex flex-col lg:h-[350px] items-center lg:items-start lg:justify-between">
+        <div className="flex flex-col items-center lg:items-start">
           <h2 className="text-4xl uppercase">{song.title}</h2>
           <p className="font-montserrat mb-5 md:mb-7 text-gray-600">{song.subheading}</p>
           <p className="font-montserrat mb-10 mt-2 text-gray-700">{song.caption}</p>

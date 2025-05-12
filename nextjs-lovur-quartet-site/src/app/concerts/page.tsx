@@ -38,7 +38,7 @@ export default async function ConcertsPage() {
   return (
     <>
       <Navbar />
-      <section className="relative h-[550px] w-full">
+      <section className="relative h-[300px] md:h-[450px] lg:h-[550px] w-full">
         {concertPage?.heroImage ? (
           <Image
             src={urlFor(concertPage.heroImage).url()}
@@ -54,8 +54,8 @@ export default async function ConcertsPage() {
             className="absolute inset-0 w-full h-full object-cover"
           />
         )}
-        <div className="absolute bottom-[45px] left-[170px] p-6 text-left bg-gradient-to-t from-black/70 to-transparent">
-          <h1 className="text-4xl md:text-6xl lg:text-6xl text-white font-normal mb-2">
+        <div className="absolute bottom-0 lg:bottom-[45px] lg:left-[170px] p-6 text-left bg-gradient-to-t from-black/70 to-transparent">
+          <h1 className="text-3xl md:text-6xl text-white font-normal mb-2">
             {concertPage?.heroTitle || 'Upcoming Concerts 2024/2025'}
           </h1>
           {concertPage?.heroSubtitle && (

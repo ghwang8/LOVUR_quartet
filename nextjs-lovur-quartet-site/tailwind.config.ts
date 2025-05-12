@@ -4,6 +4,7 @@ const config: Config = {
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -14,6 +15,15 @@ const config: Config = {
       },
       colors: {
         test: '#ff0000',
+      },
+      keyframes: {
+        pan: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-33%)' },
+        },
+      },
+      animation: {
+        'slow-pan': 'pan 20s linear infinite',
       },
     },
   },

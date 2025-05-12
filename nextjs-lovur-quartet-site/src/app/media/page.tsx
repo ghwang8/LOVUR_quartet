@@ -61,7 +61,7 @@ export default async function MediaPage() {
         {videos?.length > 0 && (
           <section className="mb-16 w-full max-w-6xl">
             <h2 className="text-4xl mb-8 text-left">Videos</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-6">
               {videos.map((video: any) => (
                 <div key={video.videoUrl} className="overflow-hidden shadow-lg">
                   <a href={video.videoUrl} target="_blank" rel="noopener noreferrer">
@@ -70,7 +70,7 @@ export default async function MediaPage() {
                       alt={video.title || 'Social media video'}
                       width={600}
                       height={500}
-                      className="w-full h-80 object-cover"
+                      className="w-full h-50 lg:h-80 object-cover"
                     />
                   </a>
                 </div>
@@ -83,7 +83,7 @@ export default async function MediaPage() {
         {gallery && gallery.images.length > 0 && (
           <section className='w-full max-w-6xl'>
             <h2 className="text-4xl mb-8 text-left">Gallery</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-1 md:gap-2 lg:gap-4">
               {gallery.images.map((image: any) => {
                 const isLarge = image.size === 'large'
                 return (
@@ -98,7 +98,7 @@ export default async function MediaPage() {
                       alt={image.altText}
                       width={isLarge ? 500 : 250}
                       height={400}
-                      className="w-full h-[400px] object-cover transition-transform group-hover:scale-105"
+                      className="w-full h-[230px] md:h-[400px] object-cover transition-transform group-hover:scale-105"
                     />
                   </div>
                 )

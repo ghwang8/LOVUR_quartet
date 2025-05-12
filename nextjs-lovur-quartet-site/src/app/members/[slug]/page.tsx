@@ -69,8 +69,8 @@ export default async function MemberPage({ params }: { params: { slug: string } 
       <Navbar />
       <div className="flex flex-col items-center container mx-auto px-4 py-10 font-montserrat">
          {/* Two-column layout: text + image */}
-        <div className="flex flex-col h-[600px] max-w-6xl md:flex-row md:gap-8">
-          <div className='md:w-[55%] h-[600px] flex flex-col justify-between'>
+        <div className="flex flex-col h-[auto] lg:h-[600px] max-w-6xl lg:flex-row lg:gap-8">
+          <div className='lg:w-[55%] lg:h-[600px] flex flex-col justify-between'>
             {/* Heading */} 
             <div className="mb-14">
               <h1 className="font-theseasons text-4xl font-normal mb-2">{member.name}</h1>
@@ -86,20 +86,20 @@ export default async function MemberPage({ params }: { params: { slug: string } 
           
 
           {/* Image block */}
-          <div className="md:w-[45%] h-[560px] flex justify-center mb-8 mt-6 md:mt-0">
+          <div className="h-[auto] lg:w-[45%] lg:h-[560px] flex justify-center mb-5 lg:mb-8 lg:mt-0">
             <Image
               src={urlFor(member.bioPhoto || member.photo).url()}
               alt={member.name}
               width={430}
               height={400}
-              className="shadow-lg object-cover object-top translate-y-4"
+              className="shadow-lg object-cover object-top lg:translate-y-4"
             />
           </div>
         </div>
 
         {/* Remaining full bio paragraphs */}
         {remainingParagraphs?.length > 0 && (
-          <div className="max-w-6xl mx-auto prose">
+          <div className="max-w-6xl mx-auto lg:prose">
             <PortableText value={remainingParagraphs} components={portableTextComponents} />
           </div>
         )}

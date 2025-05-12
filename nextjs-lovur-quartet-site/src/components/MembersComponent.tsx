@@ -15,19 +15,19 @@ const MembersComponent = ({ member, index, total }: Props) => {
   const isLast = index === total - 1;
   return (
     <div
-      className={`flex flex-col md:flex-row items-center ${
+      className={`flex flex-col lg:flex-row items-center ${
         isLast ? '' : 'border-b border-gray-300 pb-6'
-      } ${isEven ? 'flex-col md:flex-row-reverse text-right' : ''}`}
+      } ${isEven ? 'flex-col lg:flex-row-reverse text-right' : ''}`}
     >
 
       {/* Member Image */}
-      <div className="flex-shrink-0 w-[230px] h-auto mb-5 md:mb-0">
+      <div className="flex-shrink-0 w-[230px] h-auto mb-5 md:mb-0 overflow-hidden">
         <Image
           src={urlFor(member.photo).url()}
           alt={member.name}
           width={230}
           height={305}
-          className="h-auto object-cover"
+          className={`h-auto object-cover ${ isLast ? 'scale-135' : ''}`}
         />
       </div>
 

@@ -22,13 +22,15 @@ export default async function HomePage() {
   return (
     <>
       <Navbar />
-      <section className="relative h-[95vh]">
-        <img
-          src="/media/group_photo.jpg" 
-          alt="Landing"
-          className="absolute inset-0 w-full h-full object-cover transform -translate-y-33"
-        />
-        <div className="absolute bottom-0 w-full bg-white bg-opacity-80 p-6 text-center flex flex-col items-center">
+      <section className="relative h-[530px] md:h-[680px] lg:h-[95vh] overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src="/media/group_photo.jpg" 
+            alt="Landing"
+            className="w-full h-full object-cover animate-slow-pan -translate-y-33 md:animate-none"
+          />
+        </div>
+        <div className="absolute pb-0 bottom-0 w-full bg-white bg-opacity-80 p-6 text-center flex flex-col items-center">
           <div className='flex items-end mb-3'>
             <h2 className="text-lg md:text-xl font-semibold mr-2">LOVUR:</h2>
             <p className="text-lg md:text-xl mt-3">
@@ -38,7 +40,7 @@ export default async function HomePage() {
           <h3 className="text-2xl md:text-3xl font-theseasons-it">
             Multi-genre string quartet based in Vancouver
           </h3>
-          <p className="font-montserrat mt-3 text-xl text-gray-700">
+          <p className="font-montserrat mt-3 text-lg md:text-xl text-gray-700">
               43,000+ followers   |   10,000,000+ views
           </p>
         </div>

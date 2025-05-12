@@ -37,11 +37,11 @@ export default function ContactPage() {
   return (
     <>
       <Navbar />
-      <div className="max-w-6xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center h-[650px]">
+      <div className="max-w-6xl mx-auto px-4 md:px-10 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center lg:h-[650px]">
           {/* Contact Form */}
           <div className='flex flex-col h-[100%]'>
-            <div className='mb-8'>
+            <div className='lg:mb-8'>
               <h1 className="text-4xl font-bold mb-2">Hello!</h1>
               <p className="font-montserrat text-lg text-gray-600 mb-8">We would love to hear from you.</p>
             </div>
@@ -108,7 +108,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={status === 'sending'}
-                  className="w-[40%] bg-gray-900 text-white font-montserrat font-medium py-3 px-4 hover:bg-gray-500 uppercase transition cursor-pointer"
+                  className="lg:w-[40%] text-sm md:text-base bg-gray-900 text-white font-montserrat font-medium py-3 px-4 hover:bg-gray-500 uppercase transition cursor-pointer"
                 >
                   {status === 'sending' ? 'Sending...' : 'Send Message'}
                 </button>
@@ -125,7 +125,7 @@ export default function ContactPage() {
 
           {/* Image */}
           <div className="flex justify-center">
-            <div className="w-[500px] h-[650px] relative overflow-hidden">
+            <div className="w-full h-[500px] md:w-[500px] md:h-[650px] relative overflow-hidden">
               <Image
                 src="/media/contact-photo.jpg" 
                 alt="Contact us"
@@ -137,20 +137,20 @@ export default function ContactPage() {
         </div>
 
         {/* General Management Section */}
-        <div className="font-montserrat mt-16 text-center">
-          <p className="text-lg text-gray-700">General Management</p>
+        <div className="font-montserrat mt-16 text-center mb-0 pb-0">
+          <p className="md:text-lg text-gray-700 mb-0 pb-0">General Management</p>
 
-          <div className="w-[120px] h-[120px] mx-auto mb-4">
+          <div className="w-[120px] h-[120px] mx-auto mb-1">
             <Image
               src="/media/arietta-logo-black.svg"
               alt="Arietta Entertainment logo"
               width={120}
               height={120}
-              className="object-contain"
+              className="w-full h-full object-cover"
             />
           </div>
 
-          <h3 className="text-lg font-bold mb-2">Arietta Entertainment</h3>
+          <h3 className="text-lg font-bold mb-2">ARIETTA Entertainment</h3>
           <ul className="space-y-1 text-gray-700">
             <li>Phone: 778 887 2018</li>
             <li>Email: arietta.entertainment@gmail.com</li>

@@ -31,10 +31,10 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
   }
 
   return (
-    <div className={`flex flex-col font-montserrat bg-white ${isLast ? '' : 'border-b border-gray-300'} p-6 w-[80vw] max-w-6xl mx-auto space-y-4`}>
-      <div className='flex w-full'>
+    <div className={`flex flex-col font-montserrat bg-white ${isLast ? '' : 'border-b border-gray-300'} lg:p-6 lg:w-[80vw] max-w-6xl mx-auto space-y-4`}>
+      <div className='flex flex-col items-center md:items-start md:flex-row w-full'>
         {/* Date square */}
-        <div className='flex flex-col w-[100px] h-[100px] bg-gray-200 items-center justify-center'>
+        <div className='flex flex-col mb-5 w-[100px] h-[100px] bg-gray-200 items-center justify-center'>
           <div className="text-center w-[70%] border-b border-gray-400 leading-tight">
             <p className="uppercase text-lg text-gray-700">
               {formatMonth(dateRange.start)}
@@ -52,11 +52,11 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
           </div>
         </div>
 
-        <div className='flex flex-col w-[90%] ml-8'>
-          <div className="flex mb-5">
-            <h3 className="text-xl text-gray-900 mr-2">{location}</h3>
-            <p className='text-xl mr-1'> | </p>
-            <h3 className="text-xl text-gray-900">{title}</h3>
+        <div className='flex flex-col md:w-[90%] md:ml-4 lg:ml-8'>
+          <div className="flex flex-col items-center text-center lg:flex-row md:text-left md:items-start mb-5">
+            <h3 className="text-base italic mb-2 lg:mb-0 lg:text-xl text-gray-900 mr-2">{location}</h3>
+            <p className='hidden lg:flex lg:text-xl mr-1'> | </p>
+            <h3 className="text-lg md:text-xl text-gray-900">{title}</h3>
           </div>
           <ul className="list-disc pl-5 text-gray-900 mb-5">
             {bulletPoints.map((point, i) => (
@@ -64,12 +64,12 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
             ))}
           </ul>
 
-          <div className="prose prose-sm text-gray-800 mb-9">
+          <div className="prose text-center md:text-left prose-sm text-gray-800 mb-5 md:mb-9">
             <PortableText value={details} components={components} />
           </div>
         </div>
       </div>
-            <div className='flex w-full justify-center'>
+        <div className='flex mb-8 md:mb-4 w-full justify-center'>
           {ticketLink && (
             <a
               href={ticketLink}
