@@ -15,7 +15,6 @@ function urlFor(source: SanityImageSource) {
   return builder.image(source);
 }
 
-// Custom PortableText components for styling
 const portableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => <p className="mb-4">{children}</p>,
@@ -41,7 +40,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function MemberPage({ params }: { params: { slug: string } }) {
+type PageProps = {
+  params: {
+    slug: string;
+  };
+};
+
+export default async function MemberPage({ params }: PageProps) {
   const member: Member | null = await client.fetch(
     groq`*[_type == "member" && slug.current == $slug][0]{
       name,
