@@ -8,7 +8,6 @@ import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { PortableTextBlock } from '@portabletext/types';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { type GetStaticPropsContext } from 'next';
 
 const builder = imageUrlBuilder(client);
 
