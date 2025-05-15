@@ -30,7 +30,7 @@ interface Member {
   fullBio?: PortableTextBlock[];
 }
 
-interface MemberPageProps {
+interface PageProps {
   params: {
     slug: string;
   };
@@ -46,7 +46,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function MemberPage({ params }: MemberPageProps) {
+export default async function MemberPage({ params }: PageProps) {
   const member: Member | null = await client.fetch(
     groq`*[_type == "member" && slug.current == $slug][0]{
       name,
