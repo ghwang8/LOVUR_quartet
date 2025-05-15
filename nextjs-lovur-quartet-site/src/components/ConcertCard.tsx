@@ -15,9 +15,6 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
   ? new Date(dateRange.end).toLocaleDateString(undefined, { month: "short", day: "numeric" })
   : null;
 
-  const formatFullDate = (dateStr: string) =>
-    new Date(dateStr).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
-
   const components: PortableTextComponents = {
     marks: {
       strong: ({ children }: { children: React.ReactNode }) => (
