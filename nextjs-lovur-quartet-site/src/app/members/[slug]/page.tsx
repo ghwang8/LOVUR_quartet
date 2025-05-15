@@ -31,12 +31,14 @@ interface Member {
   fullBio?: PortableTextBlock[];
 }
 
-type Props = {
-  params: { slug: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
+// Use the simplest possible props definition that Next.js will accept
+type PageProps = {
+  params: {
+    slug: string;
+  };
 };
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<Array<{ slug: string }>> {
   const slugs: { slug: { current: string } }[] = await client.fetch(
     groq`*[_type == "member" && defined(slug.current)]{ "slug": slug }`
   );
@@ -46,9 +48,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const member: Member | null = await client.fetch(
-    groq`*[_type == "member" && slug.current == $slug][0]{ name }`,
+    groq`*[_type == "member" && slug.current == $slug][0]{ name, description }`,
     { slug: params.slug }
   );
 
@@ -58,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function MemberPage({ params }: Props) {
+export default async function MemberPage({ params }: PageProps) {
   const member: Member | null = await client.fetch(
     groq`*[_type == "member" && slug.current == $slug][0]{
       name,
