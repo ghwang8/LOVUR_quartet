@@ -18,10 +18,6 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
   const formatFullDate = (dateStr: string) =>
     new Date(dateStr).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
 
-  const dateDisplay = dateRange.end
-    ? `${formatFullDate(dateRange.start)} – ${formatFullDate(dateRange.end)}`
-    : formatFullDate(dateRange.start)
-
   const components: PortableTextComponents = {
     marks: {
       strong: ({ children }: { children: React.ReactNode }) => (
@@ -53,8 +49,8 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
         </div>
 
         <div className='flex flex-col md:w-[90%] md:ml-4 lg:ml-8'>
-          <div className="flex flex-col items-center text-center lg:flex-row md:text-left md:items-start mb-5">
-            <h3 className="text-base italic mb-2 lg:mb-0 lg:text-xl text-gray-900 mr-2">{location}</h3>
+          <div className="flex flex-col items-center text-center lg:flex-row lg:items-center md:text-left md:items-start mb-5">
+            <h3 className="text-base italic mb-2 lg:mb-0 lg:text-lg text-gray-900 mr-2">{location}</h3>
             <p className='hidden lg:flex lg:text-xl mr-1'> | </p>
             <h3 className="text-lg md:text-xl text-gray-900">{title}</h3>
           </div>

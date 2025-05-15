@@ -12,7 +12,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
     let ticking = false;
 
     const updateScrolled = () => {
@@ -25,7 +24,6 @@ export default function Navbar() {
     };
 
     const handleScroll = () => {
-      lastScrollY = window.scrollY;
       if (!ticking) {
         window.requestAnimationFrame(updateScrolled);
         ticking = true;

@@ -4,12 +4,14 @@ import imageUrlBuilder from '@sanity/image-url';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { PortableTextBlock } from '@portabletext/types';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 const builder = imageUrlBuilder(client);
 
-function urlFor(source: any) {
+function urlFor(source: SanityImageSource) {
   return builder.image(source);
 }
 
@@ -23,10 +25,10 @@ const portableTextComponents: PortableTextComponents = {
 interface Member {
   name: string;
   position: string;
-  photo: any;
+  photo: SanityImageSource;
   description: string;
-  bioPhoto: any;
-  fullBio: any;
+  bioPhoto: SanityImageSource;
+  fullBio: PortableTextBlock[];
 }
 
 export async function generateStaticParams() {
@@ -56,34 +58,32 @@ export default async function MemberPage({ params }: { params: { slug: string } 
     notFound();
   }
 
-  const paragraphBlocks = member.fullBio?.filter(
-    (block: any) => block._type === 'block'
-  ) || [];
-  
+  const paragraphBlocks = (member.fullBio || []).filter(
+    (block) => block._type === 'block'
+  );
+
   const firstTwoParagraphs = paragraphBlocks.slice(0, 2);
   const remainingParagraphs = paragraphBlocks.slice(2);
-  
 
   return (
     <>
       <Navbar />
       <div className="flex flex-col items-center container mx-auto px-4 py-10 font-montserrat">
-         {/* Two-column layout: text + image */}
+        {/* Two-column layout: text + image */}
         <div className="flex flex-col h-[auto] lg:h-[600px] max-w-6xl lg:flex-row lg:gap-8">
-          <div className='lg:w-[55%] lg:h-[600px] flex flex-col justify-between'>
-            {/* Heading */} 
+          <div className="lg:w-[55%] lg:h-[600px] flex flex-col justify-between">
+            {/* Heading */}
             <div className="mb-14">
               <h1 className="font-theseasons text-4xl font-normal mb-2">{member.name}</h1>
               <h2 className="italic text-lg text-gray-600">{member.position}</h2>
             </div>
             {/* Text block */}
             <div className="space-y-4">
-              {firstTwoParagraphs && (
+              {firstTwoParagraphs.length > 0 && (
                 <PortableText value={firstTwoParagraphs} components={portableTextComponents} />
               )}
             </div>
           </div>
-          
 
           {/* Image block */}
           <div className="h-[auto] lg:w-[45%] lg:h-[560px] flex justify-center mb-5 lg:mb-8 lg:mt-0">
@@ -98,7 +98,7 @@ export default async function MemberPage({ params }: { params: { slug: string } 
         </div>
 
         {/* Remaining full bio paragraphs */}
-        {remainingParagraphs?.length > 0 && (
+        {remainingParagraphs.length > 0 && (
           <div className="max-w-6xl mx-auto lg:prose">
             <PortableText value={remainingParagraphs} components={portableTextComponents} />
           </div>

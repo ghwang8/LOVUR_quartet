@@ -1,16 +1,19 @@
 import { groq } from 'next-sanity';
 import { client } from '@/sanity/client';
-import { PortableText } from '@portabletext/react';
-import { PortableTextBlock } from '@portabletext/react';
-import { PortableTextComponents } from '@portabletext/react';
+import { PortableText, PortableTextComponents } from '@portabletext/react';
+import { PortableTextBlock } from '@portabletext/types';
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+// Define types for your custom content
 interface HeadingBreak {
   _type: 'headingBreak';
   heading: string;
 }
+
+// Union type for all possible content blocks
+type AboutContent = PortableTextBlock | HeadingBreak;
 
 interface AboutPageData {
   headerImage: {
@@ -19,10 +22,11 @@ interface AboutPageData {
     };
     alt?: string;
   };
-  content: any[]; // Use 'any' or define more specific types
+  content: AboutContent[]; // Properly typed content array
   lastUpdated: string;
 }
 
+// Typed components for PortableText
 const components: PortableTextComponents = {
   block: {
     normal: ({ children }) => <p className="mb-6">{children}</p>,
@@ -51,7 +55,13 @@ const aboutPageQuery = groq`
       ...,
       "asset": asset->
     },
-    content,
+    content[] {
+      ...,
+      // Explicitly include _type for all content
+      _type == "headingBreak" => {
+        heading
+      }
+    },
     lastUpdated
   }
 `;
@@ -73,6 +83,7 @@ export default async function AboutPage() {
                 width={1000}
                 height={550}
                 className="w-full h-auto object-cover transform scale-120 -translate-y-[10px] md:-translate-y-[20px] lg:scale-110 lg:-translate-y-[30px]"
+                priority
               />
             )}
           </div>

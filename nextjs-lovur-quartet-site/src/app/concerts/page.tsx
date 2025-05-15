@@ -6,10 +6,19 @@ import { Concert } from '@/types/concert';
 import imageUrlBuilder from '@sanity/image-url';
 import Image from 'next/image';
 import { groq } from 'next-sanity';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
+// Define types for your concert page data
+interface ConcertPageData {
+  heroImage?: SanityImageSource;
+  heroTitle?: string;
+  heroSubtitle?: string;
+}
+
+// Properly type the image builder function
 const builder = imageUrlBuilder(client);
 
-function urlFor(source: any) {
+function urlFor(source: SanityImageSource) {
   return builder.image(source);
 }
 
@@ -32,7 +41,7 @@ const CONCERT_PAGE_QUERY = groq`*[_type == "concertPage"][0]{
 export default async function ConcertsPage() {
   const [concerts, concertPage] = await Promise.all([
     client.fetch<Concert[]>(CONCERTS_QUERY),
-    client.fetch(CONCERT_PAGE_QUERY)
+    client.fetch<ConcertPageData>(CONCERT_PAGE_QUERY)
   ]);
 
   return (
@@ -48,10 +57,11 @@ export default async function ConcertsPage() {
             priority
           />
         ) : (
-          <img
+          <Image
             src="/media/about_group_photo.jpg" 
             alt="Default Concert Image"
-            className="absolute inset-0 w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
         )}
         <div className="absolute bottom-0 lg:bottom-[45px] lg:left-[170px] p-6 text-left bg-gradient-to-t from-black/70 to-transparent">
@@ -69,7 +79,7 @@ export default async function ConcertsPage() {
         {concerts.length === 0 ? (
           <p className="text-center text-gray-500">No concerts currently scheduled.</p>
         ) : (
-          concerts.map((concert, index ) => (
+          concerts.map((concert, index) => (
             <ConcertCard 
               key={concert._id} 
               concert={concert}

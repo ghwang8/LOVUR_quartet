@@ -1,14 +1,47 @@
-import { client } from '@/sanity/client'
-import { groq } from 'next-sanity'
-import imageUrlBuilder from '@sanity/image-url'
-import Image from 'next/image'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+import { client } from '@/sanity/client';
+import { groq } from 'next-sanity';
+import imageUrlBuilder from '@sanity/image-url';
+import Image from 'next/image';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
-const builder = imageUrlBuilder(client)
+const builder = imageUrlBuilder(client);
 
-function urlFor(source: any) {
-  return builder.image(source)
+// Define types for your data structures
+interface PressKit {
+  downloadLink: string;
+  buttonText: string;
+  year?: string;
+}
+
+interface SocialVideo {
+  videoUrl: string;
+  thumbnail: SanityImageSource;
+  title?: string;
+}
+
+interface GalleryImage {
+  _id: string;
+  image: SanityImageSource;
+  altText?: string;
+  size?: 'small' | 'large';
+}
+
+interface Gallery {
+  title?: string;
+  images: GalleryImage[];
+}
+
+interface MediaPageData {
+  pressKit?: PressKit;
+  videos?: SocialVideo[];
+  gallery?: Gallery;
+}
+
+// Properly typed image URL builder
+function urlFor(source: SanityImageSource) {
+  return builder.image(source);
 }
 
 const MEDIA_QUERY = groq`{
@@ -30,10 +63,10 @@ const MEDIA_QUERY = groq`{
       size
     }
   }
-}`
+}`;
 
 export default async function MediaPage() {
-  const { pressKit, videos, gallery } = await client.fetch(MEDIA_QUERY)
+  const { pressKit, videos, gallery } = await client.fetch<MediaPageData>(MEDIA_QUERY);
 
   return (
     <>
@@ -58,11 +91,11 @@ export default async function MediaPage() {
         </section>
 
         {/* Videos Section */}
-        {videos?.length > 0 && (
+        {videos && videos.length > 0 && (
           <section className="mb-16 w-full max-w-6xl">
             <h2 className="text-4xl mb-8 text-left">Videos</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-6">
-              {videos.map((video: any) => (
+              {videos.map((video) => (
                 <div key={video.videoUrl} className="overflow-hidden shadow-lg">
                   <a href={video.videoUrl} target="_blank" rel="noopener noreferrer">
                     <Image
@@ -84,8 +117,8 @@ export default async function MediaPage() {
           <section className='w-full max-w-6xl'>
             <h2 className="text-4xl mb-8 text-left">Gallery</h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-1 md:gap-2 lg:gap-4">
-              {gallery.images.map((image: any) => {
-                const isLarge = image.size === 'large'
+              {gallery.images.map((image) => {
+                const isLarge = image.size === 'large';
                 return (
                   <div
                     key={image._id}
@@ -95,13 +128,13 @@ export default async function MediaPage() {
                   >
                     <Image
                       src={urlFor(image.image).url()}
-                      alt={image.altText}
+                      alt={image.altText || 'Gallery image'}
                       width={isLarge ? 500 : 250}
                       height={400}
                       className="w-full h-[230px] md:h-[400px] object-cover transition-transform group-hover:scale-105"
                     />
                   </div>
-                )
+                );
               })}
             </div>
           </section>
@@ -109,5 +142,5 @@ export default async function MediaPage() {
       </main>
       <Footer />
     </>
-  )
+  );
 }
