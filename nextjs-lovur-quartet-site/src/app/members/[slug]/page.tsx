@@ -8,6 +8,7 @@ import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { PortableTextBlock } from '@portabletext/types';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import type { Metadata } from 'next';
 
 const builder = imageUrlBuilder(client);
 
@@ -30,11 +31,10 @@ interface Member {
   fullBio?: PortableTextBlock[];
 }
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
+type Props = {
+  params: { slug: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
 
 export async function generateStaticParams() {
   const slugs: { slug: { current: string } }[] = await client.fetch(
@@ -46,7 +46,19 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function MemberPage({ params }: PageProps) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const member: Member | null = await client.fetch(
+    groq`*[_type == "member" && slug.current == $slug][0]{ name }`,
+    { slug: params.slug }
+  );
+
+  return {
+    title: member ? `${member.name} | LOVUR Quartet` : 'Member Profile',
+    description: member?.description || 'LOVUR Quartet member profile',
+  };
+}
+
+export default async function MemberPage({ params }: Props) {
   const member: Member | null = await client.fetch(
     groq`*[_type == "member" && slug.current == $slug][0]{
       name,
