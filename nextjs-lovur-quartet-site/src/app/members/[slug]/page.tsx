@@ -40,13 +40,11 @@ export async function generateStaticParams() {
   }));
 }
 
-type PageProps = {
-  params: {
-    slug: string;
-  };
-};
-
-export default async function MemberPage({ params }: PageProps) {
+export default async function MemberPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const member: Member | null = await client.fetch(
     groq`*[_type == "member" && slug.current == $slug][0]{
       name,
