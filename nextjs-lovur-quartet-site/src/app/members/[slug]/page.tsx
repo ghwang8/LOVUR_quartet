@@ -56,11 +56,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function MemberPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function MemberPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
+
   const member: Member | null = await client.fetch(
     groq`*[_type == "member" && slug.current == $slug][0]{
       name,
@@ -70,7 +68,7 @@ export default async function MemberPage({
       bioPhoto,
       fullBio
     }`,
-    { slug: params.slug }
+    { slug }
   );
 
   if (!member) {
