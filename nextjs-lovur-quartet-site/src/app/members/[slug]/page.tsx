@@ -31,9 +31,12 @@ interface Member {
   fullBio?: PortableTextBlock[];
 }
 
-// Solution: Use the simplest possible params type
 interface PageParams {
   slug: string;
+}
+
+interface Props {
+  params: PageParams;
 }
 
 export async function generateStaticParams(): Promise<PageParams[]> {
@@ -46,7 +49,7 @@ export async function generateStaticParams(): Promise<PageParams[]> {
   }));
 }
 
-export async function generateMetadata({ params }: { params: PageParams }): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const member: Member | null = await client.fetch(
     groq`*[_type == "member" && slug.current == $slug][0]{ name, description }`,
     { slug: params.slug }
@@ -58,7 +61,7 @@ export async function generateMetadata({ params }: { params: PageParams }): Prom
   };
 }
 
-export default async function MemberPage({ params }: { params: PageParams }) {
+export default async function MemberPage({ params }: Props) {
   const member: Member | null = await client.fetch(
     groq`*[_type == "member" && slug.current == $slug][0]{
       name,
