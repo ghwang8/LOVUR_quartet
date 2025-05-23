@@ -1,0 +1,8 @@
+{
+  "projects": [
+    {
+      "src": "nextjs-lovur-quartet-site",
+      "use": "@vercel/next"
+    }
+  ]
+}
