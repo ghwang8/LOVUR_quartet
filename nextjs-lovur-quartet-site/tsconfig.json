@@ -36,7 +36,6 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "../studio_lovur_quartet_site/schemaTypes/mediaPage.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"
   ],
