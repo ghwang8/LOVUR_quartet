@@ -4,15 +4,17 @@ import sgMail from '@sendgrid/mail'
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!)
 
 export async function POST(request: Request) {
-  const { name, email, message } = await request.json()
+  const { firstName, lastName, email, message } = await request.json()
+  const fullName = `${firstName} ${lastName}`.trim()
 
   const msg = {
     to: process.env.NEXT_PUBLIC_EMAIL_RECIPIENT,
-    from: 'ghwangwebdev@gmail.com', 
-    subject: `New message from ${name}`,
+    from: 'ghwangwebdev@gmail.com', // Keep this for now, but verify in SendGrid
+    replyTo: email, // Helps prevent spam and makes "Reply" work properly
+    subject: `New message from ${fullName}`,
     text: message,
     html: `
-      <p><strong>From:</strong> ${name} (${email})</p>
+      <p><strong>From:</strong> ${fullName} (${email})</p>
       <p>${message.replace(/\n/g, '<br>')}</p>
     `,
   }
