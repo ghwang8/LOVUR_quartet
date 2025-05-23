@@ -11,7 +11,6 @@ import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
 const builder = imageUrlBuilder(client);
-
 function urlFor(source: SanityImageSource) {
   return builder.image(source);
 }
@@ -31,15 +30,7 @@ interface Member {
   fullBio?: PortableTextBlock[];
 }
 
-interface PageParams {
-  slug: string;
-}
-
-interface Props {
-  params: PageParams;
-}
-
-export async function generateStaticParams(): Promise<PageParams[]> {
+export async function generateStaticParams() {
   const slugs: { slug: { current: string } }[] = await client.fetch(
     groq`*[_type == "member" && defined(slug.current)]{ "slug": slug }`
   );
@@ -49,7 +40,11 @@ export async function generateStaticParams(): Promise<PageParams[]> {
   }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
   const member: Member | null = await client.fetch(
     groq`*[_type == "member" && slug.current == $slug][0]{ name, description }`,
     { slug: params.slug }
@@ -61,7 +56,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function MemberPage({ params }: Props) {
+export default async function MemberPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const member: Member | null = await client.fetch(
     groq`*[_type == "member" && slug.current == $slug][0]{
       name,
