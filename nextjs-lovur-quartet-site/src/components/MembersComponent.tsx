@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { Member } from '@/types/member';
 import { urlFor } from '@/sanity/client';
 
@@ -41,12 +40,6 @@ const MembersComponent = ({ member, index, total }: Props) => {
         <p className="italic text-lg text-gray-700 mb-6">{member.position}</p>
         <p className="text-gray-600 mb-7 text-center md:text-justify font-normal">{member.description}</p>
 
-        {/* Button to Full Bio */}
-        <Link href={`/members/${member.slug.current}`}>
-          <p className="inline-block font-semibold uppercase mt-4 px-6 py-2 bg-gray-900 text-white hover:bg-gray-500">
-            Full Bio
-          </p>
-        </Link>
       </div>
     </div>
   );

@@ -33,43 +33,6 @@ export default defineType({
       name: 'description',
       title: 'Short Description',
       type: 'text',
-    },
-    {
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'name',
-        maxLength: 96,
-        slugify: input => input.toLowerCase().replace(/\s+/g, '-').slice(0, 96)
-      },
-      validation: Rule => Rule.required()
-    },
-    {
-      name: 'bioPhoto',
-      title: 'Photo for Full Bio Page',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    },
-    {
-      name: 'fullBio',
-      title: 'Full Bio',
-      type: 'array',
-      of: [{ type: 'block' }],
-    },
-  ],
-  preview: {
-    select: {
-      title: 'name',
-      slug: 'slug'
-    },
-    prepare({ title, slug }) {
-      return {
-        title,
-        subtitle: slug?.current ? `/members/${slug.current}` : 'Missing slug'
-      }
     }
-  }
+  ]
 })
