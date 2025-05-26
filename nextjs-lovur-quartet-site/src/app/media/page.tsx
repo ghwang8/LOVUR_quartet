@@ -1,7 +1,6 @@
 import { client } from '@/sanity/client';
 import { groq } from 'next-sanity';
 import imageUrlBuilder from '@sanity/image-url';
-import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
@@ -98,7 +97,7 @@ export default async function MediaPage() {
               {videos.map((video) => (
                 <div key={video.videoUrl} className="overflow-hidden shadow-lg">
                   <a href={video.videoUrl} target="_blank" rel="noopener noreferrer">
-                    <Image
+                    <img
                       src={urlFor(video.thumbnail).url()}
                       alt={video.title || 'Social media video'}
                       width={600}
@@ -126,7 +125,7 @@ export default async function MediaPage() {
                       isLarge ? 'col-span-2' : 'col-span-1'
                     }`}
                   >
-                    <Image
+                    <img
                       src={urlFor(image.image).url()}
                       alt={image.altText || 'Gallery image'}
                       width={isLarge ? 500 : 250}

@@ -126,11 +126,10 @@ export default function ContactPage() {
           {/* Image */}
           <div className="flex justify-center">
             <div className="w-full h-[500px] md:w-[500px] md:h-[650px] relative overflow-hidden">
-              <Image
+              <img
                 src="/media/contact-photo.jpg" 
                 alt="Contact us"
-                fill
-                className="object-contain"
+                className="w-full h-full object-contain"
               />
             </div>
           </div>

@@ -76,16 +76,15 @@ export default async function AboutPage() {
         {/* Header Image */}
         <div className="w-full flex justify-center mb-8">
           <div className="w-full h-[auto] md:w-[1000px] lg:h-[550px] relative overflow-hidden shadow-md">
-            {data?.headerImage && (
-              <Image
-                src={data.headerImage.asset.url}
-                alt={data.headerImage.alt || 'About LOVUR Quartet'}
-                width={1000}
-                height={550}
-                className="w-full h-auto object-cover transform scale-120 -translate-y-[10px] md:-translate-y-[20px] lg:scale-110 lg:-translate-y-[30px]"
-                priority
-              />
-            )}
+           {data?.headerImage?.asset?.url && (
+            <img
+              src={data.headerImage.asset.url}
+              alt={data.headerImage.alt || 'About LOVUR Quartet'}
+              width={1000}
+              height={550}
+              className="w-full h-auto object-cover transform scale-120 -translate-y-[10px] md:-translate-y-[20px] lg:scale-110 lg:-translate-y-[30px]"
+            />
+          )}
           </div>
         </div>
 

@@ -25,11 +25,41 @@ function urlFor(source: SanityImageSource) {
 const CONCERTS_QUERY = groq`*[_type == "concert"]{
   _id,
   title,
-  dateRange,
+  subHeading,
   location,
-  bulletPoints,
-  details,
-  ticketLink
+  address,
+  city,
+  heroImage,
+  description,
+  slug,
+  linkType,
+  externalUrl,
+  program,
+  ageRequirement,
+  performerDetails[]{
+    description,
+    url
+  },
+  eventInstances[]{
+    startDate,
+    endDate,
+    doorsTime,
+    time,
+    location,
+    address,
+    city
+  },
+  ticketTiers[]{
+    heading,
+    subheading,
+    price,
+    availability,
+    eventInstanceDate,
+    url,
+    showTime,
+    bgcolor,
+    address
+  }
 }`;
 
 const CONCERT_PAGE_QUERY = groq`*[_type == "concertPage"][0]{
@@ -44,24 +74,24 @@ export default async function ConcertsPage() {
     client.fetch<ConcertPageData>(CONCERT_PAGE_QUERY)
   ]);
 
+  
+console.log("Fetched concerts:", concerts);
+
   return (
     <>
       <Navbar />
       <section className="relative h-[300px] md:h-[450px] lg:h-[550px] w-full">
         {concertPage?.heroImage ? (
-          <Image
+          <img
             src={urlFor(concertPage.heroImage).url()}
             alt="Concert Hero Image"
-            fill
-            className="object-cover"
-            priority
+            className="w-full h-full object-cover" 
           />
         ) : (
-          <Image
+          <img
             src="/media/about_group_photo.jpg" 
             alt="Default Concert Image"
-            fill
-            className="object-cover"
+            className="w-full h-full object-cover" 
           />
         )}
         <div className="absolute bottom-0 lg:bottom-[45px] lg:left-[170px] p-6 text-left bg-gradient-to-t from-black/70 to-transparent">
