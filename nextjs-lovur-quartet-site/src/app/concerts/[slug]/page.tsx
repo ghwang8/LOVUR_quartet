@@ -72,7 +72,7 @@ const ConcertDetailsPage: React.FC = () => {
       </div>
       <PurchaseTickets tickets={concert.ticketTiers ?? []} />
       <EventDetails
-        location={concert.location}
+        location={concert.eventInstances?.[0]?.location || "TBA"}
         startDate={concert.eventInstances?.[0]?.startDate}
         endDate={concert.eventInstances?.[0]?.endDate}
         program={concert.program}
