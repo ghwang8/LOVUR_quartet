@@ -6,8 +6,6 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
     title, 
     location,
     eventInstances, 
-    externalUrl,
-    linkType,
     subHeading,
     ticketTiers 
   } = concert;
@@ -85,9 +83,6 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
     groupedByVenue[key].events.push(instance);
   });
 
-    // Grab first ticket tier purchase link for "Tickets" button
-    const ticketLink = ticketTiers && ticketTiers.length > 0 ? ticketTiers[0].url : null;
-
   
   return (
     <div className={`flex flex-col font-montserrat bg-white ${isLast ? '' : 'border-b border-gray-300'} lg:p-6 lg:w-[80vw] max-w-6xl mx-auto space-y-4`}>
@@ -150,7 +145,7 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
                   const allConcertSame = group.events.every(e => e.time === group.events[0].time);
 
                   return (
-                    <div key={index} className="mt-4 text-base text-gray-800">
+                    <div key={key} className="mt-4 text-base text-gray-800">
                       <p className="text-lg font-medium">
                         {formatDateRange(start, end)} – {group.location}, {group.address}
                       </p>

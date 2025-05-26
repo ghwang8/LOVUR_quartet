@@ -131,16 +131,6 @@ console.log(program)
   );
 };
 
-function formatDate(dateStr: string): string {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
-
 function formatDateRange(start?: string, end?: string): string {
   if (!start) return 'TBA';
 

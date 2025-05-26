@@ -4,7 +4,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Concert } from '@/types/concert';
 import imageUrlBuilder from '@sanity/image-url';
-import Image from 'next/image';
 import { groq } from 'next-sanity';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 

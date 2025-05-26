@@ -2,7 +2,6 @@ import { groq } from 'next-sanity';
 import { client } from '@/sanity/client';
 import { PortableText, PortableTextComponents } from '@portabletext/react';
 import { PortableTextBlock } from '@portabletext/types';
-import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
