@@ -131,7 +131,7 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
                     <li>{formatDateRange(startDate, endDate)}</li>
                   )}
                 </ul>
-               {Object.entries(groupedByVenue).map(([key, group], index) => {
+               {Object.entries(groupedByVenue).map(([key, group]) => {
                   const sortedEvents = group.events
                     .slice()
                     .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
@@ -154,7 +154,7 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
                             Doors: {group.events[0].doorsTime} | Concert: {group.events[0].time}
                           </li>
                         ) : (
-                          group.events.map((event, i) => (
+                          group.events.map((event, index) => (
                             <li key={index}>
                               {formatPrettyDate(event.startDate)} – Doors: {event.doorsTime} | Concert: {event.time}
                             </li>
