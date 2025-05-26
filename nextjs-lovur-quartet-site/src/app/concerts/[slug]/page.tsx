@@ -134,30 +134,6 @@ console.log(program)
   );
 };
 
-function formatDateRange(start?: string, end?: string): string {
-  if (!start) return 'TBA';
-
-  const startDate = new Date(start);
-  const endDate = end ? new Date(end) : null;
-
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'America/Vancouver',
-  };
-
-  const formattedStart = startDate.toLocaleString('en-US', options);
-
-  if (!endDate || startDate.toDateString() === endDate.toDateString()) {
-    return formattedStart;
-  }
-
-  const formattedEnd = endDate.toLocaleString('en-US', options);
-  return `${formattedStart} – ${formattedEnd}`;
-}
-
   function formatDateWithManualTime(start?: string, end?: string, time?: string): string {
       if (!start) return 'TBA';
 
