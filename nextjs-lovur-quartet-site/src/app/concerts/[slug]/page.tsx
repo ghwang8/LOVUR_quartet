@@ -36,7 +36,7 @@ const ConcertDetailsPage: React.FC = () => {
 
   if (!concert) return <div>Loading...</div>;
 
-
+  
   return (
     <div className="flex flex-col items-center w-full">
       <Navbar />
@@ -58,12 +58,12 @@ const ConcertDetailsPage: React.FC = () => {
         </div>
       </div>
       <div className="max-w-7xl p-6 mt-5 text-left">
-       <h3 className="text-2xl font-semibold">
-            {formatDateRange(
-            concert.eventInstances?.[0]?.startDate,
-            concert.eventInstances?.[0]?.endDate
+        <h3 className="text-2xl font-semibold">
+            {formatDateWithManualTime(
+              concert.eventInstances?.[0]?.startDate,
+              concert.eventInstances?.[0]?.endDate,
+              concert.eventInstances?.[0]?.time
             )}
-
         </h3>
         <h2 className="text-4xl font-bold mt-2 mb-8">{concert.title.toUpperCase()}</h2>
         <div className="font-montserrat mt-4 text-lg">
@@ -76,6 +76,7 @@ const ConcertDetailsPage: React.FC = () => {
         startDate={concert.eventInstances?.[0]?.startDate}
         endDate={concert.eventInstances?.[0]?.endDate}
         program={concert.program}
+        time={concert.eventInstances?.[0]?.time}
       />
       <Footer />
     </div>
@@ -88,11 +89,13 @@ const EventDetails = ({
   program,
   startDate,
   endDate,
+  time,
 }: {
   location: string;
   program: string;
   startDate?: string;
   endDate?: string;
+  time?: string;
 }) => {
 
   const [hover, setHover] = useState(false);
@@ -104,7 +107,7 @@ console.log(program)
         <ul className="space-y-2 text-2xl text-center">
           <li className="flex flex-col"><strong className="m-5">Venue:</strong> {location}</li>
           <li className="flex flex-col">
-            <strong className="m-5">Date and Time:</strong> {formatDateRange(startDate, endDate)}
+            <strong className="m-5">Date and Time:</strong> {formatDateWithManualTime(startDate, endDate,time)}
           </li>
           <li className="flex flex-col"><strong className="m-5">Program:</strong> {program}</li>
           <li className="flex flex-col"><strong className="m-5">Age Requirement:</strong> All ages welcome! Anyone under 16 must be accompanied by an adult.</li>
@@ -142,9 +145,6 @@ function formatDateRange(start?: string, end?: string): string {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
     timeZone: 'America/Vancouver',
   };
 
@@ -158,6 +158,30 @@ function formatDateRange(start?: string, end?: string): string {
   return `${formattedStart} – ${formattedEnd}`;
 }
 
+  function formatDateWithManualTime(start?: string, end?: string, time?: string): string {
+      if (!start) return 'TBA';
 
+      const startDate = new Date(start);
+      const endDate = end ? new Date(end) : null;
+
+      const options: Intl.DateTimeFormatOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timeZone: 'America/Vancouver', // Or your desired timezone
+      };
+
+      const formattedStart = startDate.toLocaleDateString('en-US', options);
+      
+      if (!endDate || startDate.toDateString() === endDate.toDateString()) {
+        return time ? `${formattedStart} at ${time}` : formattedStart;
+      }
+
+      const formattedEnd = endDate.toLocaleDateString('en-US', options);
+      return time
+        ? `${formattedStart} at ${time} – ${formattedEnd}`
+        : `${formattedStart} – ${formattedEnd}`;
+    }
 
 export default ConcertDetailsPage;
