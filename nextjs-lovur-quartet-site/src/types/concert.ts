@@ -44,7 +44,7 @@ export type Concert = {
   location: string;
   address: string;
   dateRange?: string;
-  description: any;
+  description: string;
   details?: PortableTextBlock[];
   bannerImage: {
     asset: {
