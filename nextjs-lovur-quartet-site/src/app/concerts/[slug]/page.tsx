@@ -47,11 +47,11 @@ const ConcertDetailsPage: React.FC = () => {
           className="absolute inset-0 w-full h-full object-[center_60%] object-cover"
         />
         <div className="relative z-10 flex flex-col items-start justify-end h-full text-white pb-15 pl-25 bg-black/40">
-          <h2 className="text-8xl w-[60%] tracking-wide">
+          <h2 className="text-7xl w-[60%] tracking-wide">
             {concert.title}
           </h2>
           <div className="flex w-[60%]">
-            <h3 className="text-6xl tracking-widest font-montserrat uppercase">
+            <h3 className="text-4xl tracking-widest font-montserrat uppercase">
               {concert.subHeading}
             </h3>
           </div>
@@ -65,7 +65,14 @@ const ConcertDetailsPage: React.FC = () => {
               concert.eventInstances?.[0]?.time
             )}
         </h3>
-        <h2 className="text-4xl font-bold mt-2 mb-8">{concert.title.toUpperCase()}</h2>
+        <div className="flex align-end">
+          <h2 className="text-4xl font-bold mt-2 mb-8">
+            {`${concert.title}`.toUpperCase()}
+          </h2>
+          <h2 className="text-4xl font-bold mt-2 mb-8">
+            {`: ${concert.subHeading}`}
+          </h2>
+        </div>
         <div className="font-montserrat mt-4 text-lg">
            <p>{concert.description}</p>
         </div>
