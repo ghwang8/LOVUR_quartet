@@ -47,11 +47,11 @@ const ConcertDetailsPage: React.FC = () => {
           className="absolute inset-0 w-full h-full object-[center_60%] object-cover"
         />
         <div className="relative z-10 flex flex-col items-start justify-end h-full text-white pb-15 pl-25 bg-black/40">
-          <h2 className="text-8xl w-[60%] font-bold tracking-wide">
+          <h2 className="text-8xl w-[60%] tracking-wide">
             {concert.title}
           </h2>
           <div className="flex w-[60%]">
-            <h3 className="text-4xl font-medium tracking-widest font-montserrat uppercase">
+            <h3 className="text-6xl tracking-widest font-montserrat uppercase">
               {concert.subHeading}
             </h3>
           </div>
