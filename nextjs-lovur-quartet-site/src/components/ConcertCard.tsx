@@ -7,7 +7,6 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
     location,
     eventInstances, 
     subHeading,
-    ticketTiers 
   } = concert;
 
     if (!eventInstances || eventInstances.length === 0) {
