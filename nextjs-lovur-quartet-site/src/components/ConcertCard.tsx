@@ -155,7 +155,7 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
                           </li>
                         ) : (
                           group.events.map((event, i) => (
-                            <li key={i}>
+                            <li key={index}>
                               {formatPrettyDate(event.startDate)} – Doors: {event.doorsTime} | Concert: {event.time}
                             </li>
                           ))

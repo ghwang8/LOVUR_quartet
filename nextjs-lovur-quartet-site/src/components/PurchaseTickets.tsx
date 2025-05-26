@@ -58,7 +58,7 @@ const PurchaseTickets: React.FC<PurchaseTicketsProps> = ({ tickets }) => {
                 <p className="text-center text-sm italic mb-6">*price before tax</p>
                 <ul className="w-full text-sm text-center text-lg space-y-1 mb-6">
                    <li className="flex w-full text-lg justify-center items-center">
-                        <img src="/images/icons/date.png" alt="date" className="w-5 h-5 mr-2" />
+                        <img src="/media/icons/date.png" alt="date" className="w-5 h-5 mr-2" />
                         {ticket.showTime
                         ? (ticket.eventInstanceDate ? `${formatDateTime(ticket.eventInstanceDate)} ${ticket.showTime}` : ticket.showTime)
                         : (ticket.eventInstanceDate ? formatDateTime(ticket.eventInstanceDate) : 'Date TBA')}
