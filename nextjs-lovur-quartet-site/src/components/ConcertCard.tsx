@@ -17,11 +17,27 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
     );
   }
   
-  const formatMonth = (dateStr: string) =>
-    new Date(dateStr).toLocaleDateString(undefined, { month: "short" });
+const formatMonth = (dateStr?: string) => {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  return isNaN(date.getTime())
+    ? ""
+    : new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/Vancouver",
+        month: "short",
+      }).format(date);
+};
 
-  const formatDay = (dateStr: string) =>
-    new Date(dateStr).toLocaleDateString(undefined, { day: "numeric" });
+const formatDay = (dateStr?: string) => {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  return isNaN(date.getTime())
+    ? ""
+    : new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/Vancouver",
+        day: "numeric",
+      }).format(date);
+};
 
   const sortedEvents = eventInstances?.slice().sort((a, b) =>
   new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
@@ -30,40 +46,42 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
   const startDate = sortedEvents?.[0]?.startDate;
   const endDate = sortedEvents?.[sortedEvents.length - 1]?.endDate || sortedEvents?.[sortedEvents.length - 1]?.startDate;
 
-  function getOrdinalSuffix(day: number) {
-  if (day > 3 && day < 21) return `${day}th`; // covers 11–13
-  switch (day % 10) {
-    case 1: return `${day}st`;
-    case 2: return `${day}nd`;
-    case 3: return `${day}rd`;
-    default: return `${day}th`;
-  }
+ function formatPrettyDate(dateStr: string) {
+  const date = new Date(dateStr);
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: "America/Vancouver",
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  };
+  return new Intl.DateTimeFormat("en-US", options).format(date);
 }
-
-  function formatPrettyDate(dateStr: string) {
-    const date = new Date(dateStr);
-    const weekday = date.toLocaleDateString(undefined, { weekday: 'long' });
-    const month = date.toLocaleDateString(undefined, { month: 'long' });
-    const day = getOrdinalSuffix(date.getDate());
-    return `${weekday}, ${month} ${day}`;
-  }
 
   function formatDateRange(start: string, end?: string) {
-    const startDate = new Date(start);
-    const endDate = end ? new Date(end) : null;
+  const startDate = new Date(start);
+  const endDate = end ? new Date(end) : null;
 
-    const sameDay = !end || start === end;
-    const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric' };
+  const sameDay = !end || start === end;
 
-    if (sameDay) {
-      return startDate.toLocaleDateString(undefined, options); // e.g. Saturday, July 5th
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: "America/Vancouver",
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  };
+
+  const formatter = new Intl.DateTimeFormat("en-US", options);
+
+  if (sameDay) {
+    return formatter.format(startDate); // e.g. Saturday, July 5
   }
 
-  const startStr = startDate.toLocaleDateString(undefined, options);
-  const endStr = endDate!.toLocaleDateString(undefined, options);
+  const startStr = formatter.format(startDate);
+  const endStr = formatter.format(endDate!);
 
-  return `${startStr} to ${endStr}`; // e.g. Saturday, July 5th – Monday, July 7th
+  return `${startStr} to ${endStr}`; // e.g. Saturday, July 5 to Monday, July 7
 }
+
   const groupedByVenue: Record<string, {
     location: string;
     address: string;
@@ -82,7 +100,6 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
     groupedByVenue[key].events.push(instance);
   });
 
-  
   return (
     <div className={`flex flex-col font-montserrat bg-white ${isLast ? '' : 'border-b border-gray-300'} lg:p-6 lg:w-[80vw] max-w-6xl mx-auto space-y-4`}>
       <div className='flex flex-col items-center md:items-start md:flex-row w-full'>
@@ -92,10 +109,10 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
           <>
             <div className="text-center w-[70%] border-b border-gray-400 leading-tight">
               <p className="uppercase text-lg text-gray-700">
-                {formatMonth(startDate!)}
+                {formatMonth(startDate)}
               </p>
               <p className="text-lg text-gray-900">
-                {formatDay(startDate!)}
+                {formatDay(startDate)}
               </p>
             </div>
             {endDate && endDate !== startDate && (

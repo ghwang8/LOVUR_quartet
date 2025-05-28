@@ -34,17 +34,26 @@ const ConcertDetailsPage: React.FC = () => {
     }
     }, [slug]);
 
-  if (!concert) return <div>Loading...</div>;
+  if (!concert) {
+    return (
+      <div className="flex items-center justify-center h-screen w-full bg-white">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="w-12 h-12 border-4 border-gray-300 border-t-gray-800 rounded-full animate-spin" />
+          <p className="text-gray-700 text-lg font-medium">Loading concert...</p>
+        </div>
+      </div>
+    );
+  }
 
   
   return (
     <div className="flex flex-col items-center w-full">
       <Navbar />
-      <div className="relative w-full h-[500px] overflow-hidden">
+      <div className="relative w-full h-[200px] md:h-[300px] lg:h-[500px] overflow-hidden">
         <img
           src="/media/taylor_swift.jpg"
           alt="Concert image"
-          className="absolute inset-0 w-full h-full object-[center_60%] object-cover"
+          className="absolute inset-0 w-full h-full scale-[170%] object-[center_130%] md:scale-[150%] md:object-[center_50%] lg:scale-[100%] lg:object-[center_60%] object-cover"
         />
         <div className="relative z-10 flex flex-col items-start justify-end h-full text-white pb-15 pl-25 bg-black/40">
           <h2 className="text-7xl w-[60%] tracking-wide">

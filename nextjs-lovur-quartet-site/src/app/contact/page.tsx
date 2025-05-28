@@ -8,27 +8,26 @@ import Image from 'next/image'
 export default function ContactPage() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setStatus('sending')
 
-    const formData = new FormData(e.currentTarget as HTMLFormElement)
-    const data = {
-      firstName: formData.get('firstName'),
-      lastName: formData.get('lastName'),
-      email: formData.get('email'),
-      message: formData.get('message'),
-    }
+    const form = e.currentTarget
+    const formData = new FormData(form)
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('https://formspree.io/f/mvgaerpq', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        headers: { 'Accept': 'application/json' },
+        body: formData,
       })
 
-      if (!response.ok) throw new Error()
-      setStatus('success')
+      if (response.ok) {
+        setStatus('success')
+        form.reset()
+      } else {
+        setStatus('error')
+      }
     } catch {
       setStatus('error')
     }
@@ -40,12 +39,15 @@ export default function ContactPage() {
       <div className="max-w-6xl mx-auto px-4 md:px-10 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center lg:h-[650px]">
           {/* Contact Form */}
-          <div className='flex flex-col h-[100%]'>
-            <div className='lg:mb-8'>
+          <div className="flex flex-col h-full">
+            <div className="lg:mb-8">
               <h1 className="text-4xl font-bold mb-2">Hello!</h1>
               <p className="font-montserrat text-lg text-gray-600 mb-8">We would love to hear from you.</p>
             </div>
-            <form onSubmit={handleSubmit} className="font-montserrat space-y-6 bg-white">
+            <form
+              onSubmit={handleSubmit}
+              className="font-montserrat space-y-6 bg-white"
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="firstName" className="block text-m text-gray-700 mb-1">
@@ -56,7 +58,6 @@ export default function ContactPage() {
                     name="firstName"
                     id="firstName"
                     required
-                    placeholder=""
                     className="w-full bg-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
@@ -70,7 +71,6 @@ export default function ContactPage() {
                     name="lastName"
                     id="lastName"
                     required
-                    placeholder=""
                     className="w-full bg-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
@@ -85,7 +85,6 @@ export default function ContactPage() {
                   name="email"
                   id="email"
                   required
-                  placeholder=""
                   className="w-full bg-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -99,26 +98,51 @@ export default function ContactPage() {
                   id="message"
                   required
                   rows={7}
-                  placeholder=""
                   className="w-full bg-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
-              <div className='flex w-full justify-center'>
+              <div className="flex w-full justify-center">
                 <button
                   type="submit"
                   disabled={status === 'sending'}
-                  className="lg:w-[40%] text-sm md:text-base bg-gray-900 text-white font-montserrat font-medium py-3 px-4 hover:bg-gray-500 uppercase transition cursor-pointer"
+                  className="lg:w-[40%] text-sm md:text-base bg-gray-900 text-white font-montserrat font-medium py-3 px-4 hover:bg-gray-500 uppercase transition cursor-pointer flex items-center justify-center"
                 >
+                  {status === 'sending' && (
+                    <svg
+                      className="animate-spin h-5 w-5 mr-2 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                      />
+                    </svg>
+                  )}
                   {status === 'sending' ? 'Sending...' : 'Send Message'}
                 </button>
               </div>
 
               {status === 'success' && (
-                <p className="text-green-600 text-sm mt-2">Message sent successfully!</p>
+                <div className='flex justify-center items-center w-full'>
+                  <p className="text-green-600 text-base font-bold mt-2">Message sent successfully!</p>
+                </div>
               )}
               {status === 'error' && (
-                <p className="text-red-600 text-sm mt-2">There was an error sending your message.</p>
+                <div className='flex justify-center items-center w-full'>
+                  <p className="text-red-600 text-base font-bold mt-2">There was an error sending your message.</p>
+                </div>
               )}
             </form>
           </div>
@@ -127,7 +151,7 @@ export default function ContactPage() {
           <div className="flex justify-center">
             <div className="w-full h-[500px] md:w-[500px] md:h-[650px] relative overflow-hidden">
               <img
-                src="/media/contact-photo.jpg" 
+                src="/media/contact-photo.jpg"
                 alt="Contact us"
                 className="w-full h-full object-contain"
               />

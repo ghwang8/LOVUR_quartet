@@ -80,6 +80,8 @@ export default async function MediaPage() {
               </h2>
               <a
                 href={pressKit.downloadLink}
+                target="_blank"
+                rel="noreferrer"
                 className="font-montserrat inline-block py-3 rounded-lg text-lg transition-colors hover:text-blue-400"
                 download
               >
