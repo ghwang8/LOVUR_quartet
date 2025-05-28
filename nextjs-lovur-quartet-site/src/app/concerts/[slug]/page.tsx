@@ -55,31 +55,31 @@ const ConcertDetailsPage: React.FC = () => {
           alt="Concert image"
           className="absolute inset-0 w-full h-full scale-[170%] object-[center_130%] md:scale-[150%] md:object-[center_50%] lg:scale-[100%] lg:object-[center_60%] object-cover"
         />
-        <div className="relative z-10 flex flex-col items-start justify-end h-full text-white pb-15 pl-25 bg-black/40">
-          <h2 className="text-7xl w-[60%] tracking-wide">
+        <div className="relative z-10 flex flex-col items-start justify-end h-full text-white pb-5 pl-5 lg:pb-15 lg:pl-25 bg-black/40">
+          <h2 className="text-4xl md:text-5xl lg:text-7xl lg:w-[60%] tracking-wide">
             {concert.title}
           </h2>
-          <div className="flex w-[60%]">
-            <h3 className="text-4xl tracking-widest font-montserrat uppercase">
+          <div className="flex lg:w-[60%]">
+            <h3 className="text-2xl lg:text-4xl tracking-widest font-montserrat uppercase">
               {concert.subHeading}
             </h3>
           </div>
         </div>
       </div>
       <div className="max-w-7xl p-6 mt-5 text-left">
-        <h3 className="text-2xl font-semibold">
+        <h3 className="text-xl md:text-2xl font-semibold">
             {formatDateWithManualTime(
               concert.eventInstances?.[0]?.startDate,
               concert.eventInstances?.[0]?.endDate,
               concert.eventInstances?.[0]?.time
             )}
         </h3>
-        <div className="flex align-end">
-          <h2 className="text-4xl font-bold mt-2 mb-8">
-            {`${concert.title}`.toUpperCase()}
+        <div className="flex flex-col md:flex-row align-end">
+          <h2 className="text-3xl md:text-3xl lg:text-4xl font-bold mt-2 md:mb-8">
+            {`${concert.title} :`.toUpperCase()}
           </h2>
-          <h2 className="text-4xl font-bold mt-2 mb-8">
-            {`: ${concert.subHeading}`}
+          <h2 className="text-3xl md:ml-2 md:text-3xl lg:text-4xl font-bold md:mt-2 mb-4 md:mb-8">
+            {concert.subHeading ? ` ${concert.subHeading}` : ''}
           </h2>
         </div>
         <div className="font-montserrat mt-4 text-lg">
