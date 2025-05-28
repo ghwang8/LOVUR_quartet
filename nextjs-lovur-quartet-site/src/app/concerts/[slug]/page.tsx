@@ -49,11 +49,11 @@ const ConcertDetailsPage: React.FC = () => {
   return (
     <div className="flex flex-col items-center w-full">
       <Navbar />
-      <div className="relative w-full h-[250px] md:h-[300px] lg:h-[500px] overflow-hidden">
+      <div className="relative w-full h-[220px] md:h-[300px] lg:h-[500px] overflow-hidden">
         <img
           src="/media/taylor_swift.jpg"
           alt="Concert image"
-          className="absolute inset-0 w-full h-full scale-[155%] object-[center_130%] md:scale-[150%] md:object-[center_50%] lg:scale-[100%] lg:object-[center_60%] object-cover"
+          className="absolute inset-0 w-full h-full scale-[155%] object-[center_170%] md:scale-[150%] md:object-[center_50%] lg:scale-[100%] lg:object-[center_60%] object-cover"
         />
         <div className="relative z-10 flex flex-col items-start justify-end h-full text-white pb-5 pl-5 lg:pb-15 lg:pl-25 bg-black/40">
           <h2 className="text-4xl md:text-5xl lg:text-7xl lg:w-[60%] tracking-wide">
