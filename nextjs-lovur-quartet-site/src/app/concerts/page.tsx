@@ -73,9 +73,6 @@ export default async function ConcertsPage() {
     client.fetch<ConcertPageData>(CONCERT_PAGE_QUERY)
   ]);
 
-  
-console.log("Fetched concerts:", concerts);
-
   return (
     <>
       <Navbar />

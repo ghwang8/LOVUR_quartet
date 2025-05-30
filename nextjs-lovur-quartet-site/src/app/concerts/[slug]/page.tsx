@@ -89,6 +89,7 @@ const ConcertDetailsPage: React.FC = () => {
       <PurchaseTickets tickets={concert.ticketTiers ?? []} />
       <EventDetails
         location={concert.eventInstances?.[0]?.location || "TBA"}
+        address = {concert.eventInstances?.[0]?.address}
         startDate={concert.eventInstances?.[0]?.startDate}
         endDate={concert.eventInstances?.[0]?.endDate}
         program={concert.program}
@@ -102,6 +103,7 @@ const ConcertDetailsPage: React.FC = () => {
 
 const EventDetails = ({
   location,
+  address,
   program,
   startDate,
   endDate,
@@ -109,6 +111,7 @@ const EventDetails = ({
 }: {
   location: string;
   program: string;
+  address?: string;
   startDate?: string;
   endDate?: string;
   time?: string;
@@ -121,7 +124,7 @@ console.log(program)
       <div className="w-full flex flex-col items-center max-w-6xl mx-auto mb-18">
         <h3 className="text-3xl font-bold mb-6 uppercase">Event Details</h3>
         <ul className="space-y-2 text-2xl text-center">
-          <li className="flex flex-col"><strong className="m-5">Venue:</strong> {location}</li>
+          <li className="flex flex-col"><strong className="m-5">Venue:</strong> {`${location}, ${address}`}</li>
           <li className="flex flex-col">
             <strong className="m-5">Date and Time:</strong> {formatDateWithManualTime(startDate, endDate,time)}
           </li>
@@ -129,7 +132,7 @@ console.log(program)
           <li className="flex flex-col"><strong className="m-5">Age Requirement:</strong> All ages welcome! Anyone under 16 must be accompanied by an adult.</li>
         </ul>
       </div>
-      <div className="w-full flex flex-col items-center max-w-6xl mx-auto">
+      <div className="w-full flex flex-col items-center text-center max-w-6xl mx-auto">
         <h3 className="text-3xl font-bold mb-6 uppercase">Performers</h3>
         <p className="text-2xl">
           LOVUR String Quartet - read about the musicians{' '}

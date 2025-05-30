@@ -18,6 +18,10 @@
   font-family: var(--font-montserrat);
 }
 
+.font-noto-sans-mono {
+  font-family: var(--font-noto-sans-mono);
+}
+
 .font-theseasons {
   font-family: var(--font-primary);
 }

@@ -34,7 +34,11 @@ export default async function HomePage() {
           <div className='flex items-end mb-3'>
             <h2 className="text-lg md:text-xl font-semibold mr-2">LOVUR:</h2>
             <p className="text-lg md:text-xl mt-3">
-              pronounced <code>/ˈlʌvɚ/</code> <span className="italic">(LUV-er)</span>
+              pronounced 
+                <code className="font-noto-sans-mono">
+                  /ˈlʌvɚ/
+                </code> 
+                <span className="italic">(LUV-er)</span>
             </p>
           </div>
           <h3 className="text-2xl md:text-3xl font-theseasons-it">
