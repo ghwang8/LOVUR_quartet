@@ -14,4 +14,3 @@ export interface Member {
       current: string;
     };
   }
-  
