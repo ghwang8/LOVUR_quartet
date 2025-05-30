@@ -30,6 +30,63 @@
   font-family: var(--font-theseasons-it);
 }
 
+@keyframes pan-fade-left-to-right {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  65% {
+    transform: translateX(-50%);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(-50%);
+    opacity: 0;
+  }
+  81% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-overlay-control {
+  0%, 65% {
+    opacity: 0;
+  }
+  80%, 82% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  .mobile-slow-animation {
+    animation: pan-fade-left-to-right 18s ease-in-out infinite;
+    transform-origin: center;
+    min-width: 200%;
+  }
+
+  .mobile-image-fade-overlay {
+    position: absolute;
+    inset: 0;
+    background: black;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
+  }
+
+  .mobile-fade-overlay-animating {
+    animation: fade-overlay-control 18s ease-in-out infinite;
+  }
+}
+
+
 :root {
   --font-theseasons-it: 'theseasons-it', serif;
   --background: #ffffff;

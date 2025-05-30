@@ -101,7 +101,7 @@ export default async function ConcertsPage() {
           )}
         </div>
       </section>
-      <main className="container mx-auto p-8 space-y-8">
+      <main className="container mx-auto p-2 space-y-8">
         {concerts.length === 0 ? (
           <p className="text-center text-gray-500">No concerts currently scheduled.</p>
         ) : (

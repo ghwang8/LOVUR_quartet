@@ -101,7 +101,7 @@ const formatDay = (dateStr?: string) => {
   });
 
   return (
-    <div className={`flex flex-col font-montserrat bg-white ${isLast ? '' : 'border-b border-gray-300'} lg:p-6 lg:w-[80vw] max-w-6xl mx-auto space-y-4`}>
+    <div className={`flex flex-col font-montserrat bg-white ${isLast ? '' : 'border-b border-gray-300'} w-full pt-6 pb-8 px-8 lg:p-12 lg:w-[80vw] max-w-6xl mx-auto space-y-4`}>
       <div className='flex flex-col items-center md:items-start md:flex-row w-full'>
         {/* Date square */}
         <div className='flex flex-col mb-5 w-[100px] h-[100px] bg-gray-200 items-center justify-center'>
@@ -187,37 +187,37 @@ const formatDay = (dateStr?: string) => {
         </div>
       </div>
 
-      <div className='flex mb-8 md:mb-4 w-full justify-center'>
-  {(() => {
-    // Top-level external ticket link
-    if (concert.externalUrl) {
-      return (
-        <a
-          href={concert.externalUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="uppercase flex justify-center bg-gray-900 w-[120px] hover:bg-gray-500 text-white font-medium py-2 px-4 transition cursor-pointer"
-        >
-          Tickets
-        </a>
-      );
-    }
+      <div className='flex w-full justify-center'>
+        {(() => {
+          // Top-level external ticket link
+          if (concert.externalUrl) {
+            return (
+              <a
+                href={concert.externalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="uppercase flex justify-center bg-gray-900 w-[120px] hover:bg-gray-500 text-white font-medium py-2 px-4 transition cursor-pointer"
+              >
+                Tickets
+              </a>
+            );
+          }
 
 
-    // Default to internal detail page if nothing else is set
-    if (concert.slug?.current) {
-      return (
-        <Link href={`/concerts/${concert.slug.current}`} passHref>
-          <div className="uppercase flex justify-center bg-gray-900 w-[120px] hover:bg-gray-500 text-white font-medium py-2 px-4 transition cursor-pointer">
-            Tickets
-          </div>
-        </Link>
-      );
-    }
+          // Default to internal detail page if nothing else is set
+          if (concert.slug?.current) {
+            return (
+              <Link href={`/concerts/${concert.slug.current}`} passHref>
+                <div className="uppercase flex justify-center bg-gray-900 w-[120px] hover:bg-gray-500 text-white font-medium py-2 px-4 transition cursor-pointer">
+                  Tickets
+                </div>
+              </Link>
+            );
+          }
 
-    return null; // No button if no link of any kind
-  })()}
-</div>
+          return null; // No button if no link of any kind
+        })()}
+      </div>
 
     </div>
   )

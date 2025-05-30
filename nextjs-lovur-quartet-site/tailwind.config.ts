@@ -16,14 +16,14 @@ const config: Config = {
       colors: {
         test: '#ff0000',
       },
+      animation: {
+        'mobile-pan': 'pan 30s ease-in-out infinite alternate',
+      },
       keyframes: {
         pan: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-33%)' },
+          '0%': { transform: 'translateX(-10%) scale(2.1)' },
+          '100%': { transform: 'translateX(10%) scale(2.1)' },
         },
-      },
-      animation: {
-        'slow-pan': 'pan 20s linear infinite',
       },
     },
   },
