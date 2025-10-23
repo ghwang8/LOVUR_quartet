@@ -46,13 +46,14 @@ export type Concert = {
   dateRange?: string;
   description: string;
   details?: PortableTextBlock[];
-  bannerImage: {
-    asset: {
-      _ref: string;
+  heroImage?: {
+  asset?: {
+      url?: string;
     };
     alt?: string;
   };
   performerDetails?: PerformerDetails[];
   eventInstances?: EventInstance[];
   ticketTiers?: TicketTier[];
+  
 };
