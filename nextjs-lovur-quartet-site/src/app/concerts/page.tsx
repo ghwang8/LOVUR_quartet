@@ -92,7 +92,7 @@ export default async function ConcertsPage() {
         )}
         <div className="absolute bottom-0 lg:bottom-[45px] lg:left-[170px] p-6 text-left bg-gradient-to-t from-black/70 to-transparent">
           <h1 className="text-3xl md:text-6xl text-white font-normal mb-2">
-            {concertPage?.heroTitle || 'Upcoming Concerts 2024/2025'}
+            {concertPage?.heroTitle || 'Upcoming Concerts'}
           </h1>
           {concertPage?.heroSubtitle && (
             <p className="text-xl md:text-2xl text-white/90">
