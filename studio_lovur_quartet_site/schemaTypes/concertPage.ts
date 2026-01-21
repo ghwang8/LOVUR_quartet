@@ -18,7 +18,7 @@ export default defineType({
       name: 'heroTitle',
       title: 'Hero Title Text',
       type: 'string',
-      initialValue: 'Upcoming Concerts 2024/2025',
+      initialValue: 'Upcoming Concerts',
       validation: Rule => Rule.required()
     }),
     defineField({
