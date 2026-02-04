@@ -43,6 +43,7 @@ const ConcertDetailsPage: React.FC = () => {
           console.log('Concert fetch result:', result);
 
           // This saves the fetched data into the page's memory.
+          // small change
           setConcert(result);
         } catch (error) {
           console.error('Error fetching concert:', error);
