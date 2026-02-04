@@ -24,6 +24,7 @@ const notoSansMono = Noto_Sans_Mono({
   variable: "--font-noto-sans-mono",
 });
 
+// What shows up in browser tab and google seaarch results
 export const metadata: Metadata = {
   title: "LOVUR Quartet",
   description: "Multi-genre string quartet based in Vancouver",

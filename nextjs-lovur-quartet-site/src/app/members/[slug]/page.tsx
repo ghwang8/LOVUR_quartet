@@ -42,6 +42,7 @@ export default function MemberPage() {
   useEffect(() => {
     if (!slug) return;
 
+    // Confirms if they are a member in the schema backend
     const fetchMember = async () => {
       try {
         const result: Member = await client.fetch(

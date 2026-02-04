@@ -1,9 +1,22 @@
+// A query language (like a filter) used to tell Sanity exactly which data we want to grab
 import { groq } from 'next-sanity';
+// The "phone line" that connects this code to the Sanity database
 import { client } from '@/sanity/client';
+// A tool that converts Sanity's special text format to actual HTML
 import { PortableText, PortableTextComponents } from '@portabletext/react';
+// A "Type definition" for TypeScript (like a rulebook that tells the computer what text data should look like)
 import { PortableTextBlock } from '@portabletext/types';
+// The reusable header and footer sections of the website
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+
+/**
+ * Anything with "interface" and "type" are TypeScript.
+ * 
+ * These lines tells the code exactly what to expect from Sanity.
+ * Example: headerImage must have a url. If the backend changes
+ * and breaks this, TypeScript will alert you.
+ */
 
 // Define types for your custom content
 interface HeadingBreak {
@@ -24,6 +37,16 @@ interface AboutPageData {
   content: AboutContent[]; // Properly typed content array
   lastUpdated: string;
 }
+
+/**
+ * This maps "data" to "design".
+ * 
+ * For example, normal: ... tells the site to add a margin (mb-6)
+ * to every normal paragraph.
+ * 
+ * And the custom "headingBreak" tells the site to use the font
+ * "theseasons" for specific titles.
+ */
 
 // Typed components for PortableText
 const components: PortableTextComponents = {
@@ -48,6 +71,12 @@ const components: PortableTextComponents = {
   },
 };
 
+/**
+ * This is your "shopping list" for the database.
+ * 
+ * It asks for the image, the specific content blocks,
+ * and the date it was last updated.
+ */
 const aboutPageQuery = groq`
   *[_type == "aboutPage"][0] {
     headerImage {
@@ -65,6 +94,18 @@ const aboutPageQuery = groq`
   }
 `;
 
+/**
+ * The heart of the page.
+ * 
+ * const data = await client.fetch(...) is the moment
+ * the website "calls" Sanity to get the info.
+ * 
+ * @returns data?.headerImage?.asset?.url && (...) - is a safety check
+ * and says "Only try to show the image if the URL actually exists".
+ * 
+ * PortableText value={data.content} - This takes the messy data from
+ * Sanity and runs it through the "Stylist" we defined on line 30.
+ */
 export default async function AboutPage() {
   const data: AboutPageData = await client.fetch(aboutPageQuery);
 

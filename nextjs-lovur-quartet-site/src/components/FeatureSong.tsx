@@ -2,6 +2,13 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/image";
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
+/**
+ * Specialized section on the homepage that highlights a specific track
+ * It receives the song data and lays it out with an image on the left (on large screens) and the
+ * text/Spotify link on the right.
+ * 
+ * Doesn't relate to candlelight issue
+ */
 export type FeatureSong = {
   _id: string;
   title: string;

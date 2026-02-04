@@ -4,6 +4,13 @@ import { Member } from '@/types/member';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+/**
+ * Members Listing Page, it is the "hub" that lists all the muscians of the quartete
+ * 
+ * This is the Server Component.
+ */
+
+// Tells Sanity to find every document created using the "Member" form
 const MEMBERS_QUERY = `*[_type == "member"] | order(order asc){
     _id,
     name,

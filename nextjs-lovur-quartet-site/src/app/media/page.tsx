@@ -7,6 +7,14 @@ import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
 const builder = imageUrlBuilder(client);
 
+/**
+ * This section uses TypeScript Interfaces to descrive three distinct "features":
+ * - PressKit: Expects a link and a year
+ * - SocialVideo: Requires a video URL and thumbnail image
+ * - GalleryImage: Allows for an "alt text" (for accessibility) and a "size" setting
+ * (small or large). This is important because it dictates the layout of the grid.
+ */
+
 // Define types for your data structures
 interface PressKit {
   downloadLink: string;
@@ -43,6 +51,10 @@ function urlFor(source: SanityImageSource) {
   return builder.image(source);
 }
 
+// This is a Multi-Query. Instead of making three separate trips to
+// the database, it asks for Press Kit, all Videos, and the Gallery images
+// in one single request. It uses Object Projection (the curly braces
+// {}) to group them together.
 const MEDIA_QUERY = groq`{
   "pressKit": *[_type == "pressKit"][0]{
     downloadLink,
@@ -64,6 +76,16 @@ const MEDIA_QUERY = groq`{
   }
 }`;
 
+/**
+ * Page is built with three main sections:
+ * 
+ * - Press Kit: A simple text link that triggers a download.
+ * - Videos: A grid that shows thumbnails. Note that clicking
+ * a thumbnail opens the videoUrl in a new tab.
+ * - Gallery: This uses a Dynamic Grid Layout.
+ * - Could relate to candlelight, if the given _type is socialVideo or gallery
+ * @returns 
+ */
 export default async function MediaPage() {
   const { pressKit, videos, gallery } = await client.fetch<MediaPageData>(MEDIA_QUERY);
 

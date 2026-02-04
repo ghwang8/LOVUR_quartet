@@ -1,5 +1,6 @@
 import type { PortableTextBlock } from "sanity"
 
+// Technical hurdle for task 4
 export type EventInstance = {
   startDate: string;         // ISO date string
   endDate?: string;

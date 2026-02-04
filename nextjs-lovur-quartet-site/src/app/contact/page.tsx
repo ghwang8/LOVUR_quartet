@@ -1,3 +1,4 @@
+// 'use client' is used because it is an interactive page with users typing and clicking
 'use client'
 
 import { useState } from 'react'
@@ -6,6 +7,8 @@ import Footer from '@/components/Footer'
 import Image from 'next/image'
 
 export default function ContactPage() {
+  // Keeps track of the "mood" of the form: is it just there (idle),
+  // currently sending, or finished with success or error?
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -13,9 +16,11 @@ export default function ContactPage() {
     setStatus('sending')
 
     const form = e.currentTarget
+    // Grabs all the text from the iunputs (First Name, Email, etc.) and bundles it up
     const formData = new FormData(form)
 
     try {
+      // KEY DISCOVERY, instead
       const response = await fetch('https://formspree.io/f/mvgaerpq', {
         method: 'POST',
         headers: { 'Accept': 'application/json' },

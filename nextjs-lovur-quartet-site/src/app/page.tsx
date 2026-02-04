@@ -6,9 +6,11 @@ import { Concert } from '@/types/concert';
 import ConcertCard from '@/components/ConcertCard';
 import FeatureSongComponent, { FeatureSong } from "@/components/FeatureSong";
 
-
+// The smoking gun for missing candlelight
+// This line shows the copy of the page in 30 seconds to the user to make the website feel fast
 export const revalidate = 30;
 
+// Fetches a document of type featuredSong
 const FEATURED_SONG_QUERY = `*[_type == "featuredSong"][0]{
   _id,
   title,
@@ -18,6 +20,8 @@ const FEATURED_SONG_QUERY = `*[_type == "featuredSong"][0]{
   coverImage
 }`;
 
+// Only show concerts where the start date is today or in the future
+// [0..2] only grabs the first three concerts that meet the criteria
 const UPCOMING_CONCERTS_QUERY = `*[_type == "concert" && eventInstances[0].startDate >= now()] | order(eventInstances[0].startDate asc)[0..2] {
   _id,
   title,

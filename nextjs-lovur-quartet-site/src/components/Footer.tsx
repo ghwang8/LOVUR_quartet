@@ -2,6 +2,10 @@
 
 import Image from 'next/image';
 
+/**
+ * Very thing that visitor sees at the bottom of every page
+ * @returns 
+ */
 export default function Footer() {
   return (
     <footer className="w-full bg-white py-8 flex flex-col items-center">

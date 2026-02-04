@@ -16,10 +16,23 @@ export default function Navbar() {
 
     const updateScrolled = () => {
       const currentScrollY = window.scrollY;
-      // Only update state if we've passed the threshold by at least 10px
-      if (currentScrollY > 60 || currentScrollY < 40) {
-        setScrolled(currentScrollY > 50);
-      }
+      // // Only update state if we've passed the threshold by at least 10px
+      // if (currentScrollY > 60 || currentScrollY < 40) {
+      //   setScrolled(currentScrollY > 50);
+      // }
+      setScrolled((prevScrolled) => {
+        // If currently expanded, wait until we cross 80px to shrink
+        if (!prevScrolled && currentScrollY > 80) {
+          return true;
+        }
+        // If currently shrunk, wait until we scroll back up past 30px to expand
+        if (prevScrolled && currentScrollY < 30) {
+          return false;
+        }
+        // Otherwise, keep the current state to avoid jitter
+        return prevScrolled;
+      });
+
       ticking = false;
     };
 
@@ -50,25 +63,23 @@ export default function Navbar() {
   };
 
   return (
-    <nav 
-      className={`w-full bg-white shadow-md shadow-gray-800/10 pb-1 sticky top-0 z-50 transition-[padding] duration-400 ease-in-out delay-100 ${
-        scrolled ? 'md:pt-2' : 'pt-2 md:pt-7'
-      }`}
+    <nav
+      className={`w-full bg-white shadow-md shadow-gray-800/10 pb-1 sticky top-0 z-50 transition-[padding] duration-400 ease-in-out delay-100 ${scrolled ? 'md:pt-2' : 'pt-2 md:pt-7'
+        }`}
     >
       <div className="container mx-auto px-4 py-4 flex items-start md:items-end justify-between">
         {/* Left: Title + Nav */}
         <div className="flex flex-col">
           {/* Make heading a link to home */}
-          <Link 
-            href="/" 
-            className={`text-2xl md:text-4xl text-gray-800 font-normal transition-all duration-400 ease-in-out ${
-              scrolled ? 'md:hidden md:opacity-0 md:invisible' : 'opacity-100'
-            } hover:opacity-80 relative z-[60] block w-fit cursor-pointer
+          <Link
+            href="/"
+            className={`text-2xl md:text-4xl text-gray-800 font-normal transition-all duration-400 ease-in-out ${scrolled ? 'md:hidden md:opacity-0 md:invisible' : 'opacity-100'
+              } hover:opacity-80 relative z-[60] block w-fit cursor-pointer
             safari-tap-fix`}
           >
             LOVUR Quartet
           </Link>
-          
+
           <div className="hidden sm:flex flex-wrap gap-4 mt-2 font-montserrat text-sm">
             {navLinks.map((link) => (
               <Link

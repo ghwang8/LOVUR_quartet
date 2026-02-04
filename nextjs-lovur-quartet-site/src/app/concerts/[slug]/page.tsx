@@ -1,3 +1,5 @@
+// 'use client' tells Next.js that this page is interactive (uses useState and useEffect)
+// meaning it runes on the user's browser, not just the server.
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -9,18 +11,26 @@ import Link from 'next/link';
 import { client } from '@/sanity/client';
 import { Concert } from '@/types/concert';
 
-const ConcertDetailsPage: React.FC = () => {
-    const params = useParams();
-    const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
-    const [concert, setConcert] = useState<Concert | null>(null);
+/**
+ * This page is for a generating a single concert.
+ * @returns 
+ */
 
-    useEffect(() => {
-    
+const ConcertDetailsPage: React.FC = () => {
+  // useParams() looks at the browswer URL to see which concert was clicked
+  const params = useParams();
+  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
+  const [concert, setConcert] = useState<Concert | null>(null);
+
+  // As soon as the page loads, this "hook" triggers the Sanity fetch
+  useEffect(() => {
+
+    // This could be the main cause as to why Candlelight is not showing (Concert Detail page)
     if (slug) {
-        const fetchConcert = async () => {
+      const fetchConcert = async () => {
         try {
-            const result = await client.fetch(
-              `*[_type == "concert" && slug.current == $slug][0]{
+          const result = await client.fetch(
+            `*[_type == "concert" && slug.current == $slug][0]{
                 ...,
                 heroImage {
                   asset->{
@@ -28,19 +38,22 @@ const ConcertDetailsPage: React.FC = () => {
                   }
                 }
               }`,
-              { slug }
-            );
-            console.log('Concert fetch result:', result);
-            setConcert(result);
+            { slug }
+          );
+          console.log('Concert fetch result:', result);
+
+          // This saves the fetched data into the page's memory.
+          setConcert(result);
         } catch (error) {
-            console.error('Error fetching concert:', error);
+          console.error('Error fetching concert:', error);
         }
-        };
+      };
 
-        fetchConcert();
+      fetchConcert();
     }
-    }, [slug]);
+  }, [slug]);
 
+  // If the data hasn't arrived from Sanity yet, it shows a spinning circle and the text "Loading concert..."
   if (!concert) {
     return (
       <div className="flex items-center justify-center h-screen w-full bg-white">
@@ -52,7 +65,6 @@ const ConcertDetailsPage: React.FC = () => {
     );
   }
 
-  
   return (
     <div className="flex flex-col items-center w-full">
       <Navbar />
@@ -76,11 +88,11 @@ const ConcertDetailsPage: React.FC = () => {
       </div>
       <div className="max-w-7xl p-6 mt-5 text-left">
         <h3 className="text-xl md:text-2xl font-semibold">
-            {formatDateWithManualTime(
-              concert.eventInstances?.[0]?.startDate,
-              concert.eventInstances?.[0]?.endDate,
-              concert.eventInstances?.[0]?.time
-            )}
+          {formatDateWithManualTime(
+            concert.eventInstances?.[0]?.startDate,
+            concert.eventInstances?.[0]?.endDate,
+            concert.eventInstances?.[0]?.time
+          )}
         </h3>
         <div className="flex flex-col md:flex-row align-end">
           <h2 className="text-3xl md:text-3xl lg:text-4xl font-bold mt-2 md:mb-8">
@@ -91,13 +103,13 @@ const ConcertDetailsPage: React.FC = () => {
           </h2>
         </div>
         <div className="font-montserrat mt-4 text-lg">
-           <p>{concert.description}</p>
+          <p>{concert.description}</p>
         </div>
       </div>
       <PurchaseTickets tickets={concert.ticketTiers ?? []} />
       <EventDetails
         location={concert.eventInstances?.[0]?.location || "TBA"}
-        address = {concert.eventInstances?.[0]?.address}
+        address={concert.eventInstances?.[0]?.address}
         startDate={concert.eventInstances?.[0]?.startDate}
         endDate={concert.eventInstances?.[0]?.endDate}
         program={concert.program}
@@ -126,7 +138,7 @@ const EventDetails = ({
 }) => {
 
   const [hover, setHover] = useState(false);
-console.log(program)
+  console.log(program)
   return (
     <div className="w-full font-montserrat py-14 px-4 bg-white" id="event-details-section">
       <div className="w-full flex flex-col items-center max-w-6xl mx-auto mb-18">
@@ -134,7 +146,7 @@ console.log(program)
         <ul className="space-y-2 text-2xl text-center">
           <li className="flex flex-col"><strong className="m-5">Venue:</strong> {`${location}, ${address}`}</li>
           <li className="flex flex-col">
-            <strong className="m-5">Date and Time:</strong> {formatDateWithManualTime(startDate, endDate,time)}
+            <strong className="m-5">Date and Time:</strong> {formatDateWithManualTime(startDate, endDate, time)}
           </li>
           <li className="flex flex-col"><strong className="m-5">Program:</strong> {program}</li>
           <li className="flex flex-col"><strong className="m-5">Age Requirement:</strong> All ages welcome! Anyone under 16 must be accompanied by an adult.</li>
@@ -161,30 +173,30 @@ console.log(program)
   );
 };
 
-  function formatDateWithManualTime(start?: string, end?: string, time?: string): string {
-      if (!start) return 'TBA';
+function formatDateWithManualTime(start?: string, end?: string, time?: string): string {
+  if (!start) return 'TBA';
 
-      const startDate = new Date(start);
-      const endDate = end ? new Date(end) : null;
+  const startDate = new Date(start);
+  const endDate = end ? new Date(end) : null;
 
-      const options: Intl.DateTimeFormatOptions = {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        timeZone: 'America/Vancouver', // Or your desired timezone
-      };
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'America/Vancouver', // Or your desired timezone
+  };
 
-      const formattedStart = startDate.toLocaleDateString('en-US', options);
-      
-      if (!endDate || startDate.toDateString() === endDate.toDateString()) {
-        return time ? `${formattedStart} at ${time}` : formattedStart;
-      }
+  const formattedStart = startDate.toLocaleDateString('en-US', options);
 
-      const formattedEnd = endDate.toLocaleDateString('en-US', options);
-      return time
-        ? `${formattedStart} at ${time} – ${formattedEnd}`
-        : `${formattedStart} – ${formattedEnd}`;
-    }
+  if (!endDate || startDate.toDateString() === endDate.toDateString()) {
+    return time ? `${formattedStart} at ${time}` : formattedStart;
+  }
+
+  const formattedEnd = endDate.toLocaleDateString('en-US', options);
+  return time
+    ? `${formattedStart} at ${time} – ${formattedEnd}`
+    : `${formattedStart} – ${formattedEnd}`;
+}
 
 export default ConcertDetailsPage;

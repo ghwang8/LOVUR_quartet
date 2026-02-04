@@ -1,13 +1,22 @@
 import { client } from '@/sanity/client';
+import ConcertList from '@/components/ConcertList';
 import ConcertCard from '@/components/ConcertCard';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Concert } from '@/types/concert';
+// This is a specific Sanity tool. Sanity Stores images as complex data objects;
+// This builder turns those objects into a simple URL that a browser can understand.
 import imageUrlBuilder from '@sanity/image-url';
 import { groq } from 'next-sanity';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
+/**
+ * This page is the Concert Listing page (generates the list of all concerts).
+ * The Candlelight missing from the main list could also be here (Gemini says it's most likely here).
+ */
+
 // Define types for your concert page data
+// Defines that the "Header" of this specific page looks like (image, title, subtitle)
 interface ConcertPageData {
   heroImage?: SanityImageSource;
   heroTitle?: string;
@@ -21,6 +30,9 @@ function urlFor(source: SanityImageSource) {
   return builder.image(source);
 }
 
+// Asks for every document where the type is "concert".
+// It pulls in everything: titles, dates, ticket prices and even performer details.
+// This line could be why candlelight is missing
 const CONCERTS_QUERY = groq`*[_type == "concert"]{
   _id,
   title,
@@ -35,6 +47,7 @@ const CONCERTS_QUERY = groq`*[_type == "concert"]{
   externalUrl,
   program,
   ageRequirement,
+  isArchived,
   performerDetails[]{
     description,
     url
@@ -61,6 +74,7 @@ const CONCERTS_QUERY = groq`*[_type == "concert"]{
   }
 }`;
 
+// Asks for the settings of the page itself (like the big banner image at the top)
 const CONCERT_PAGE_QUERY = groq`*[_type == "concertPage"][0]{
   heroImage,
   heroTitle,
@@ -68,6 +82,9 @@ const CONCERT_PAGE_QUERY = groq`*[_type == "concertPage"][0]{
 }`;
 
 export default async function ConcertsPage() {
+  // Promise.all is a performance booster. It tells the server:
+  // "Go get the list of converts AND the page header at the same time.
+  // Don't wait for one to finish before starting the other"
   const [concerts, concertPage] = await Promise.all([
     client.fetch<Concert[]>(CONCERTS_QUERY),
     client.fetch<ConcertPageData>(CONCERT_PAGE_QUERY)
@@ -101,7 +118,7 @@ export default async function ConcertsPage() {
           )}
         </div>
       </section>
-      <main className="container mx-auto p-2 space-y-8">
+      {/* <main className="container mx-auto p-2 space-y-8">
         {concerts.length === 0 ? (
           <p className="text-center text-gray-500">No concerts currently scheduled.</p>
         ) : (
@@ -113,6 +130,12 @@ export default async function ConcertsPage() {
             />
           ))
         )}
+      </main> */}
+      <main className="container mx-auto p-2 space-y-8">
+        {/* 2. REPLACED THE OLD MAPPING LOGIC WITH THIS */}
+
+          <ConcertList concerts={concerts} />
+  
       </main>
       <Footer />
     </>
