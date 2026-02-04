@@ -1,6 +1,7 @@
 import { Rule } from 'sanity';
 
 // This is the golden file for why candlelight is missing
+// small change
 const concertType = {
   name: 'concert',
   type: 'document',
