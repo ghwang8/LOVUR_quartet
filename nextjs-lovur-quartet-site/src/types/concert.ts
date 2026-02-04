@@ -53,6 +53,7 @@ export type Concert = {
     };
     alt?: string;
   };
+  isArchived?: boolean;
   performerDetails?: PerformerDetails[];
   eventInstances?: EventInstance[];
   ticketTiers?: TicketTier[];

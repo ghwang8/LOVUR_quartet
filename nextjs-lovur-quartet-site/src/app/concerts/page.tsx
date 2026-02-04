@@ -1,6 +1,5 @@
 import { client } from '@/sanity/client';
 import ConcertList from '@/components/ConcertList';
-import ConcertCard from '@/components/ConcertCard';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Concert } from '@/types/concert';

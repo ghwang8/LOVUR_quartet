@@ -26,7 +26,7 @@ export default function ConcertList({ concerts }: { concerts: Concert[] }) {
 const upcoming = concerts
   .filter((concert) => {
     // We use (concert as any) to bypass the strict type check if isArchived isn't in your types file yet
-    const isManuallyArchived = (concert as any).isArchived === true;
+    const isManuallyArchived = concert.isArchived === true;
     
     // Use the first instance date, or fallback to a very old date if missing so it filters out
     const concertDate = new Date(concert.eventInstances?.[0]?.startDate || 0).getTime();
@@ -41,7 +41,7 @@ const upcoming = concerts
 
 const archive = concerts
   .filter((concert) => {
-    const isManuallyArchived = (concert as any).isArchived === true;
+    const isManuallyArchived = concert.isArchived === true;
     const concertDate = new Date(concert.eventInstances?.[0]?.startDate || 0).getTime();
 
     return isManuallyArchived || concertDate < now;
@@ -60,7 +60,7 @@ const archive = concerts
         {['upcoming', 'archive'].map((tab) => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab as any)}
+            onClick={() => setActiveTab(tab as 'upcoming' | 'archive')}
             className={`pb-4 text-sm md:text-base tracking-[0.2em] uppercase transition-all duration-300 ${
               activeTab === tab 
                 ? 'border-b-2 border-gray-900 font-bold text-gray-900' 
