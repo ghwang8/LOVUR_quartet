@@ -1,6 +1,6 @@
 import { Rule } from 'sanity';
 
-
+// This is the golden file for why candlelight is missing
 const concertType = {
   name: 'concert',
   type: 'document',
@@ -8,6 +8,16 @@ const concertType = {
   fields: [
     { name: 'title', type: 'string', title: 'Concert Title' },
     { name: 'subHeading', type: 'string', title: 'Subheading (e.g. “Taylor Swift Edition”) (optional)' },
+    {
+      name: 'isArchived',
+      type: 'boolean',
+      title: 'Archive Concert (Manual)',
+      description: 'Toggle this ON to manually hide the concert from the upcoming list immediately. \n If you want to unhide the archived concert, you need to untoggle this checkbox and change the current date to a one that is in the future. \n This may take a minute to update.',
+      initialValue: false,
+      options: {
+        layout: 'checkbox' // This often helps align the toggle/box more traditionally
+      }
+    },
     {
       name: 'eventInstances',
       type: 'array',

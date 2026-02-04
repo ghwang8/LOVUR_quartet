@@ -1,5 +1,6 @@
 import { defineType, defineField } from 'sanity'
-
+// This is the Sanity Schema ("Blueprint" for the Admin dashboard)
+// This is where you can make price optional
 export default defineType({
   name: 'aboutPage',
   title: 'About Page Settings',
