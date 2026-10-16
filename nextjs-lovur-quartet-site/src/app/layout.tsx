@@ -16,7 +16,7 @@ const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
   weight: ['400', '500', '600', '700'],
-  display: "swap", 
+  display: "swap",
 });
 
 const notoSansMono = Noto_Sans_Mono({
@@ -24,7 +24,6 @@ const notoSansMono = Noto_Sans_Mono({
   variable: "--font-noto-sans-mono",
 });
 
-// What shows up in browser tab and google seaarch results
 export const metadata: Metadata = {
   title: "LOVUR Quartet",
   description: "Multi-genre string quartet based in Vancouver",

@@ -14,6 +14,21 @@
   font-style: normal;
 }
 
+:root {
+  --font-theseasons-it: 'theseasons-it', serif;
+  --background: #ffffff;
+  --foreground: #ffffff;
+  --font-primary: 'theseasons-reg', serif;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-montserrat: var(--font-montserrat);
+}
+
+/* Set the default font for the whole site (e.g., your navigation and body text) */
+body {
+  font-family: var(--font-primary);
+}
+
 .font-montserrat {
   font-family: var(--font-montserrat);
 }
@@ -30,39 +45,19 @@
   font-family: var(--font-theseasons-it);
 }
 
+/* Animations and media queries */
 @keyframes pan-fade-left-to-right {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  65% {
-    transform: translateX(-50%);
-    opacity: 1;
-  }
-  80% {
-    transform: translateX(-50%);
-    opacity: 0;
-  }
-  81% {
-    transform: translateX(0);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  0% { transform: translateX(0); opacity: 1; }
+  65% { transform: translateX(-50%); opacity: 1; }
+  80% { transform: translateX(-50%); opacity: 0; }
+  81% { transform: translateX(0); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
 }
 
 @keyframes fade-overlay-control {
-  0%, 65% {
-    opacity: 0;
-  }
-  80%, 82% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+  0%, 65% { opacity: 0; }
+  80%, 82% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 @media (max-width: 639px) {
@@ -86,25 +81,11 @@
   }
 }
 
-
-:root {
-  --font-theseasons-it: 'theseasons-it', serif;
-  --background: #ffffff;
-  --foreground: #ffffff;
-  --font-primary: 'theseasons-reg', serif;
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-montserrat: var(--font-montserrat);
-}
-
-body {
-  font-family: var(--font-primary);
-}
-
 /* Fix for Safari mobile tap issues */
 .safari-tap-fix {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+  font-family: var(--font-primary);
 }
 
 .safari-tap-fix:active {
@@ -113,6 +94,7 @@ body {
 
 /* Prevent layout shift during transition */
 nav {
+  font-family: var(--font-montserrat), sans-serif;
   contain: layout paint;
   transform: translateZ(0);
 }
