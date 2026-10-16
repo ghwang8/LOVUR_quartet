@@ -37,6 +37,7 @@ export type Concert = {
   };
   linkType?: "internal" | "external";
   externalUrl?: string;
+  buttonLabel?: string;
   concertType: string;
   city: string;
   date: string;

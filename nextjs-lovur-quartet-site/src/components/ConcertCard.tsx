@@ -197,11 +197,11 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
         {(() => {
           // Check if the concert is in the past
           const isPast = new Date(startDate).getTime() < new Date().setHours(0, 0, 0, 0);
-          const buttonText = isPast ? "Details" : "Tickets";
+          const buttonText = isPast ? "Details" : (concert.buttonLabel || "TICKETS");
 
           if (isPast) {
             return (
-              <div className="uppercase flex justify-center bg-gray-300 w-[120px] text-gray-500 font-medium py-2 px-4 cursor-not-allowed">
+              <div className="uppercase flex items-center justify-center bg-gray-300 px-6 py-2 text-gray-500 font-medium whitespace-nowrap cursor-not-allowed">
                 Closed
               </div>
             );
@@ -210,7 +210,7 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
           if (concert.externalUrl) {
             return (
               <a href={concert.externalUrl} target="_blank" rel="noopener noreferrer"
-                className="uppercase flex justify-center bg-gray-900 w-[120px] hover:bg-gray-500 text-white font-medium py-2 px-4 transition cursor-pointer">
+                className="uppercase flex items-center justify-center bg-gray-900 px-6 py-2 hover:bg-gray-500 text-white font-medium whitespace-nowrap transition cursor-pointer">
                 {buttonText}
               </a>
             );
@@ -219,7 +219,7 @@ export default function ConcertCard({ concert, isLast }: { concert: Concert, isL
           if (concert.slug?.current) {
             return (
               <Link href={`/concerts/${concert.slug.current}`} passHref>
-                <div className="uppercase flex justify-center bg-gray-900 w-[120px] hover:bg-gray-500 text-white font-medium py-2 px-4 transition cursor-pointer">
+                <div className="uppercase flex items-center justify-center bg-gray-900 px-6 py-2 hover:bg-gray-500 text-white font-medium whitespace-nowrap transition cursor-pointer">
                   {buttonText}
                 </div>
               </Link>

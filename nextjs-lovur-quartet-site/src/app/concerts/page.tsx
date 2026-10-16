@@ -44,6 +44,7 @@ const CONCERTS_QUERY = groq`*[_type == "concert"]{
   slug,
   linkType,
   externalUrl,
+  buttonLabel,
   program,
   ageRequirement,
   isArchived,

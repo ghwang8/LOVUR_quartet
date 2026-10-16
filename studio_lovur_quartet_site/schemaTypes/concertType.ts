@@ -94,11 +94,10 @@ const concertType = {
       initialValue: 'internal'
     },
     {
-      name: 'externalUrl',
-      type: 'url',
-      title: 'External URL (if applicable)',
-      description: 'Provide the external ticket or event page URL if using External Link',
-      hidden: (context: { parent: any }) => context.parent?.linkType !== 'external'
+      name: 'buttonLabel',
+      type: 'string',
+      title: 'Button Label (optional)',
+      description: 'Will fallback to "TICKETS" if left empty, but can be customized (e.g., "MORE INFO" for free events).'
     },
     {
       name: 'program',

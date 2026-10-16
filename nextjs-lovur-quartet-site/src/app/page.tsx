@@ -28,7 +28,8 @@ const UPCOMING_CONCERTS_QUERY = `*[_type == "concert" && eventInstances[0].start
   subHeading,
   eventInstances,
   heroImage,
-  slug
+  slug,
+  buttonLabel
 }`;
 
 export default async function HomePage() {
