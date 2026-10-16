@@ -2,12 +2,17 @@ import type { NextConfig } from "next";
 import path from "path";
 
 if (typeof window === 'undefined' && global.localStorage && typeof global.localStorage.getItem !== 'function') {
-  global.localStorage = {
-    getItem: () => null,
-    setItem: () => {},
-    removeItem: () => {},
-    clear: () => {},
-  };
+  Object.defineProperty(global, 'localStorage', {
+    value: {
+      getItem: () => null,
+      setItem: () => {},
+      removeItem: () => {},
+      clear: () => {},
+      length: 0,
+      key: () => null,
+    },
+    writable: true,
+  });
 }
 
 const nextConfig: NextConfig = {
